@@ -8,11 +8,11 @@ class NewsModel {
   String? publishedAt;
 
   NewsModel(
-    this.name, [
+    this.name, {
     this.details,
     this.image,
     this.video,
     this.time,
     this.publishedAt,
-  ]);
+  });
 }
