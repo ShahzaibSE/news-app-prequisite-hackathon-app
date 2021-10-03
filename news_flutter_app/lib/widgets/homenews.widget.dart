@@ -168,16 +168,17 @@ class _HomeNewsState extends State<HomeNews> {
             ),
             actions: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      print('Search button tapped');
-                    },
-                    child: const Icon(
-                      Icons.search,
-                      size: 26.0,
-                    ),
-                  )),
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    print('Search button tapped');
+                  },
+                  child: const Icon(
+                    Icons.search,
+                    size: 26.0,
+                  ),
+                ),
+              ),
               // Padding(
               //     padding: const EdgeInsets.only(right: 20.0),
               //     child: GestureDetector(

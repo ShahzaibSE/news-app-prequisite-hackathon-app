@@ -65,10 +65,13 @@ class _TopNewsState extends State<TopNews> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
-                newsSamples.length,
+                snapshot.data.length,
                 (index) => NewsCard(
                   news: NewsModel(
                     snapshot.data[index]['title'],
+                    image: snapshot.data[index]['image'],
+                    description: snapshot.data[index]['description'],
+                    published_at: snapshot.data[index]['published_at'],
                   ),
                 ),
               ),

@@ -18,6 +18,20 @@ class NewsStory extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                print('Added to favourites');
+              },
+              child: const Icon(
+                Icons.favorite_rounded,
+                size: 26.0,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -28,17 +42,28 @@ class NewsStory extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                child: Image(
-                  image:
-                      const AssetImage('./assets/forest-placeholder-pic.jpeg'),
-                  width: MediaQuery.of(context).size.width,
-                  height: 80,
-                ),
+                child: news.image == null
+                    ? Image(
+                        fit: BoxFit.fitWidth,
+                        image: AssetImage(
+                          "assets/enlightnment-app-logo.jpeg",
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 80,
+                      )
+                    : Image(
+                        fit: BoxFit.fitWidth,
+                        image: NetworkImage(
+                          news.image.toString(),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 80,
+                      ),
               ),
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: const Text(
-                  "Prime Minister Imran Khan",
+                child: Text(
+                  news.title,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -50,8 +75,9 @@ class NewsStory extends StatelessWidget {
                   horizontal: 10.0,
                   // vertical: 10.0,
                 ),
-                child: const Text(
-                  "1 hour",
+                child: Text(
+                  DateTime.parse(news.published_at.toString()).hour.toString() +
+                      "h",
                   style: const TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
@@ -65,8 +91,13 @@ class NewsStory extends StatelessWidget {
                     horizontal: 10.0,
                     vertical: 10.0,
                   ),
-                  child: const Text(
-                    "Imran Ahmed Khan Niazi HI PP is the 22nd and current prime minister of Pakistan. He is also the chairman of the Pakistan Tehreek-e-Insaf. Before entering politics, Khan was an international cricketer and captain of the Pakistan national cricket team, which he led to victory in the 1992 Cricket World Cup.",
+                  // child: const Text(
+                  //   "Imran Ahmed Khan Niazi HI PP is the 22nd and current prime minister of Pakistan. He is also the chairman of the Pakistan Tehreek-e-Insaf. Before entering politics, Khan was an international cricketer and captain of the Pakistan national cricket team, which he led to victory in the 1992 Cricket World Cup.",
+                  //   style: const TextStyle(
+                  //     fontSize: 15,
+                  //   ),
+                  child: Text(
+                    news.description.toString(),
                     style: const TextStyle(
                       fontSize: 15,
                     ),
