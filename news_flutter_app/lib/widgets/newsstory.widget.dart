@@ -76,6 +76,7 @@ class NewsStory extends StatelessWidget {
                   // vertical: 10.0,
                 ),
                 child: Text(
+                  // "1h",
                   DateTime.parse(news.published_at.toString()).hour.toString() +
                       "h",
                   style: const TextStyle(

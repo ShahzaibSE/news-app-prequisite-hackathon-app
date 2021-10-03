@@ -22,6 +22,7 @@ class NewsCard extends StatelessWidget {
                   news.title,
                   image: news.image,
                   description: news.description,
+                  published_at: news.published_at,
                 ),
               ),
             ),
