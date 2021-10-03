@@ -9,6 +9,8 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("News");
+    print(news);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 350,
