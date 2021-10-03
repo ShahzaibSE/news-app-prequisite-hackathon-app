@@ -35,7 +35,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
             title: Container(
               // padding: const EdgeInsets.only(top: 10),
               child: Text(
-                newsSamples[index].name,
+                newsSamples[index].title,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),

@@ -113,26 +113,25 @@ class _HomeNewsState extends State<HomeNews> {
               ),
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.settings),
-          //   title: const Text('Settings'),
-          //   onTap: () => {Navigator.of(context).pop()},
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.border_color),
-          //   title: const Text('Feedback'),
-          //   onTap: () => {Navigator.of(context).pop()},
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.exit_to_app),
-          //   title: const Text('Logout'),
-          //   onTap: () => {Navigator.of(context).pop()},
-          // ),
+          ListTile(
+            leading: const Icon(Icons.favorite_rounded),
+            title: const Text('Favourite'),
+            onTap: () => {},
+          ),
+          const Divider(
+            key: Key('divider-profile'),
+            thickness: 1.0,
+          ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
             onTap: logout,
           ),
+          // ListTile(
+          //   leading: const Icon(Icons.category),
+          //   title: const Text('Category'),
+          //   onTap: () => {},
+          // ),
         ],
       ),
     );

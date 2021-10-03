@@ -38,6 +38,7 @@ dependencies:
   cloud_firestore: "^0.16.0+1"
   firebase_auth: "^0.20.1"
   splashscreen:
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:

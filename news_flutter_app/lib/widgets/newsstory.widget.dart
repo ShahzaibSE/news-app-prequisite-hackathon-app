@@ -12,7 +12,7 @@ class NewsStory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          news.name,
+          news.title,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

@@ -14,9 +14,9 @@ class _ProfileState extends State<Profile> {
       TextEditingController();
 
   saveProfile() {
-    print(nameController.value);
-    print(addressController.value);
-    print(paymentDetailsController.value);
+    print(nameController.text);
+    print(addressController.text);
+    print(paymentDetailsController.text);
     nameController.clear();
     addressController.clear();
     paymentDetailsController.clear();
