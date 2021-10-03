@@ -7,6 +7,7 @@ import "./headline.widget.dart";
 import "./popular.widget.dart";
 import "./sports.widget.dart";
 import "./user-auth-container.widget.dart";
+import "./profile.widget.dart";
 
 const tabs = <Widget>[
   Tab(
@@ -102,18 +103,26 @@ class _HomeNewsState extends State<HomeNews> {
           ListTile(
             leading: const Icon(Icons.verified_user),
             title: const Text('Profile'),
-            onTap: () => {Navigator.of(context).pop()},
+            // onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Profile(),
+                ),
+              ),
+            },
           ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: const Icon(Icons.border_color),
-            title: const Text('Feedback'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.settings),
+          //   title: const Text('Settings'),
+          //   onTap: () => {Navigator.of(context).pop()},
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.border_color),
+          //   title: const Text('Feedback'),
+          //   onTap: () => {Navigator.of(context).pop()},
+          // ),
           // ListTile(
           //   leading: const Icon(Icons.exit_to_app),
           //   title: const Text('Logout'),
