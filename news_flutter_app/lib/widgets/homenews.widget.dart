@@ -8,6 +8,7 @@ import "./popular.widget.dart";
 import "./sports.widget.dart";
 import "./user-auth-container.widget.dart";
 import "./profile.widget.dart";
+import "./search.widget.dart";
 
 const tabs = <Widget>[
   Tab(
@@ -171,7 +172,12 @@ class _HomeNewsState extends State<HomeNews> {
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
-                    print('Search button tapped');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchWidget(),
+                      ),
+                    );
                   },
                   child: const Icon(
                     Icons.search,

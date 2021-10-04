@@ -20,8 +20,9 @@ class _SignUpState extends State<SignUp> {
   //
   Widget buildTextFormField(Key keyName, String textcontrollerName,
       TextEditingController textController) {
-    if (textcontrollerName == "Password") {
+    if (textcontrollerName == "password") {
       return TextFormField(
+        obscureText: true,
         controller: textController,
         key: keyName,
         keyboardType: TextInputType.visiblePassword,
@@ -32,7 +33,7 @@ class _SignUpState extends State<SignUp> {
           contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         ),
       );
-    } else if (textcontrollerName == "Date") {
+    } else if (textcontrollerName == "date") {
       return TextFormField(
         controller: textController,
         key: keyName,
@@ -44,7 +45,7 @@ class _SignUpState extends State<SignUp> {
           contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         ),
       );
-    } else if (textcontrollerName == "Email") {
+    } else if (textcontrollerName == "email") {
       return TextFormField(
         controller: textController,
         key: keyName,
@@ -60,7 +61,7 @@ class _SignUpState extends State<SignUp> {
       return TextFormField(
           controller: textController,
           key: keyName,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.visiblePassword,
           autofocus: true,
           decoration: InputDecoration(
             hintText: textcontrollerName[0].toUpperCase() +

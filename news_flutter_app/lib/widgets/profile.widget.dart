@@ -48,9 +48,14 @@ class _ProfileState extends State<Profile> {
                   child: Container(
                     height: 40,
                     width: 40,
-                    child: Icon(
-                      Icons.add_a_photo,
-                      color: Colors.white,
+                    child: GestureDetector(
+                      onTap: () {
+                        print("Upload your picture");
+                      },
+                      child: Icon(
+                        Icons.add_a_photo,
+                        color: Colors.white,
+                      ),
                     ),
                     decoration: BoxDecoration(
                         color: Colors.deepOrange,

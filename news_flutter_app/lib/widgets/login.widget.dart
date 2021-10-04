@@ -16,7 +16,7 @@ class _LogInState extends State<LogIn> {
   //
   Widget buildTextFormField(Key keyName, String textcontrollerName,
       TextEditingController textController) {
-    if (textcontrollerName == "Email") {
+    if (textcontrollerName == "email") {
       return TextFormField(
           controller: textController,
           key: keyName,
@@ -31,8 +31,9 @@ class _LogInState extends State<LogIn> {
       return TextFormField(
           controller: textController,
           key: keyName,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.visiblePassword,
           autofocus: true,
+          obscureText: true,
           decoration: InputDecoration(
             hintText: textcontrollerName[0].toUpperCase() +
                 textcontrollerName.substring(1),
