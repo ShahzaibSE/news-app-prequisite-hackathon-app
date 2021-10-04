@@ -69,7 +69,7 @@ class _SportsWidgetState extends State<SportsWidget> {
                     image: NetworkImage(
                       headline.image.toString(),
                     ),
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 4,
                     height: 80,
                   ),
           ),

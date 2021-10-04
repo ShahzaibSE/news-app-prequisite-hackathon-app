@@ -81,7 +81,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                     image: NetworkImage(
                       headline.image.toString(),
                     ),
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 4,
                     height: 80,
                   ),
           ),
