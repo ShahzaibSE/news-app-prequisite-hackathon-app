@@ -30,7 +30,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
           'access_key': access_key,
           'languages': 'en',
           'limit': '50',
-          'categories': "health,-sports"
+          'categories': "health,sports,general"
         },
       );
       var response = await http.get(uri);
