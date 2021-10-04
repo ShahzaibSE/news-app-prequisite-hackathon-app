@@ -71,6 +71,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: DropdownButton<String>(
+                              isExpanded: true,
                               value: dropdownValue,
                               icon: const Icon(
                                 Icons.arrow_downward,
@@ -127,6 +128,11 @@ class _SearchWidgetState extends State<SearchWidget> {
                         ),
                       ),
                     ],
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                    ),
                   );
                   showDialog(
                       context: context, builder: (context) => filtersAlert);
