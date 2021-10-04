@@ -27,14 +27,13 @@ class _TopNewsState extends State<TopNews> {
       var uri = Uri.http(
         "api.mediastack.com",
         "/v1/news",
-        {'access_key': access_key},
+        {
+          'access_key': access_key,
+          'languages': 'en',
+        },
       );
       var response = await http.get(uri);
       List jsonResponse = jsonDecode(response.body)['data'];
-      print("Top News - JSON");
-      // print(jsonResponse);
-      var newsModel = NewsModel(jsonResponse[0]['title']);
-      print(newsModel.title);
       return jsonResponse;
     } catch (e) {
       throw e;
