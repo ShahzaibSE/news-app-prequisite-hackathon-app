@@ -45,7 +45,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
     }
   }
 
-  Widget buildHeadline(NewsModel headline) {
+  Widget buildHeadline(NewsModel headline, int index) {
     return Card(
       child: GestureDetector(
         onTap: () {
@@ -53,6 +53,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                index: index,
                 news: NewsModel(
                   headline.title,
                   image: headline.image,
@@ -126,6 +127,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                     description: snapshot.data[index]['description'],
                     published_at: snapshot.data[index]['published_at'],
                   ),
+                  index,
                 ),
               ),
             ),

@@ -33,7 +33,7 @@ class _PopularWidgetState extends State<PopularWidget> {
     }
   }
 
-  Widget buildPopularNews(NewsModel headline) {
+  Widget buildPopularNews(NewsModel headline, int index) {
     return Card(
       child: GestureDetector(
         onTap: () {
@@ -41,6 +41,7 @@ class _PopularWidgetState extends State<PopularWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                index: index,
                 news: NewsModel(
                   headline.title,
                   image: headline.image,
@@ -114,6 +115,7 @@ class _PopularWidgetState extends State<PopularWidget> {
                     description: snapshot.data[index]['description'],
                     published_at: snapshot.data[index]['published_at'],
                   ),
+                  index,
                 ),
               ),
             ),

@@ -4,8 +4,10 @@ import "./news.model.dart";
 import "./newsstory.widget.dart";
 
 class NewsCard extends StatelessWidget {
-  const NewsCard({Key? key, required this.news}) : super(key: key);
+  const NewsCard({Key? key, required this.news, required this.index})
+      : super(key: key);
   final NewsModel news;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class NewsCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                index: index,
                 news: NewsModel(
                   news.title,
                   image: news.image,

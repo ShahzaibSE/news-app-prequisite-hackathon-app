@@ -66,6 +66,7 @@ class _TopNewsState extends State<TopNews> {
               children: List.generate(
                 snapshot.data.length,
                 (index) => NewsCard(
+                  index: index,
                   news: NewsModel(
                     snapshot.data[index]['title'],
                     image: snapshot.data[index]['image'],

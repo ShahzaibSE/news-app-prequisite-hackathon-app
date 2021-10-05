@@ -34,6 +34,7 @@ class _SearchNewsState extends State<SearchNews> {
         },
       );
       var response = await http.get(uri);
+      print(uri);
       print(response.body);
       List jsonResponse = jsonDecode(response.body)['data'];
 
@@ -64,7 +65,7 @@ class _SearchNewsState extends State<SearchNews> {
     // }
   }
 
-  Widget buildSearchResults(NewsModel searchResult) {
+  Widget buildSearchResults(NewsModel searchResult, int index) {
     return Card(
       child: GestureDetector(
         onTap: () {
@@ -72,6 +73,7 @@ class _SearchNewsState extends State<SearchNews> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                index: index,
                 news: NewsModel(
                   searchResult.title,
                   image: searchResult.image,
@@ -277,6 +279,7 @@ class _SearchNewsState extends State<SearchNews> {
                         description: searchList[index]['description'],
                         published_at: searchList[index]['published_at'],
                       ),
+                      index,
                     );
                   }),
             );

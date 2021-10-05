@@ -58,7 +58,7 @@ class _SearchWidgetState extends State<SearchWidget> {
     // }
   }
 
-  Widget buildSearchResults(NewsModel searchResult) {
+  Widget buildSearchResults(NewsModel searchResult, int index) {
     return Card(
       child: GestureDetector(
         onTap: () {
@@ -66,6 +66,7 @@ class _SearchWidgetState extends State<SearchWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                index: index,
                 news: NewsModel(
                   searchResult.title,
                   image: searchResult.image,
@@ -266,6 +267,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                       description: searchList[index]['description'],
                       published_at: searchList[index]['published_at'],
                     ),
+                    index,
                   );
                 },
               ),

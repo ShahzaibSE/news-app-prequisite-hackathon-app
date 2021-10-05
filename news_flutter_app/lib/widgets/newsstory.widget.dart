@@ -3,9 +3,11 @@ import "package:flutter/material.dart";
 import "./news.model.dart";
 
 class NewsStory extends StatelessWidget {
-  const NewsStory({Key? key, required this.news}) : super(key: key);
+  const NewsStory({Key? key, required this.news, required this.index})
+      : super(key: key);
 
   final NewsModel news;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +22,20 @@ class NewsStory extends StatelessWidget {
         ),
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
+              key: Key(
+                index.toString(),
+              ),
               onTap: () {
                 print('Added to favourites');
               },
-              child: const Icon(
+              child: Icon(
                 Icons.favorite_rounded,
                 size: 26.0,
+                key: Key(
+                  index.toString(),
+                ),
               ),
             ),
           ),

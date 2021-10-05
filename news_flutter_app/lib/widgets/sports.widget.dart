@@ -33,7 +33,7 @@ class _SportsWidgetState extends State<SportsWidget> {
     }
   }
 
-  Widget buildSportsNews(NewsModel headline) {
+  Widget buildSportsNews(NewsModel headline, int index) {
     return Card(
       child: GestureDetector(
         onTap: () {
@@ -41,13 +41,13 @@ class _SportsWidgetState extends State<SportsWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
-                news: NewsModel(
-                  headline.title,
-                  image: headline.image,
-                  description: headline.description,
-                  published_at: headline.published_at,
-                ),
-              ),
+                  news: NewsModel(
+                    headline.title,
+                    image: headline.image,
+                    description: headline.description,
+                    published_at: headline.published_at,
+                  ),
+                  index: index),
             ),
           );
         },
@@ -114,6 +114,7 @@ class _SportsWidgetState extends State<SportsWidget> {
                     description: snapshot.data[index]['description'],
                     published_at: snapshot.data[index]['published_at'],
                   ),
+                  index,
                 ),
               ),
             ),
