@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -12,6 +13,17 @@ class _ProfileState extends State<Profile> {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController paymentDetailsController =
       TextEditingController();
+  // Image Picker configs.
+  void pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final image = await _picker.getImage(source: ImageSource.gallery);
+  }
+
+  save() {
+    print(nameController.text);
+    print(addressController.text);
+    print(paymentDetailsController.text);
+  }
 
   saveProfile() {
     print(nameController.text);
@@ -51,6 +63,7 @@ class _ProfileState extends State<Profile> {
                     child: GestureDetector(
                       onTap: () {
                         print("Upload your picture");
+                        pickImage();
                       },
                       child: Icon(
                         Icons.add_a_photo,
