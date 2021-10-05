@@ -20,6 +20,8 @@ class _SearchNewsState extends State<SearchNews> {
 
   searchNews() async {
     print('Selected category: $dropdownValue');
+    String searchQuery = searchTextController.text;
+    print('Search text: $searchQuery');
     try {
       var uri = Uri.http(
         "api.mediastack.com",
@@ -28,6 +30,7 @@ class _SearchNewsState extends State<SearchNews> {
           'access_key': access_key,
           'languages': 'en',
           'categories': dropdownValue,
+          'search': searchQuery
         },
       );
       var response = await http.get(uri);
@@ -40,14 +43,16 @@ class _SearchNewsState extends State<SearchNews> {
       // }
 
       // initState();
-      print("Search List");
-      print(searchList);
+      // print("Search List");
+      // print(searchList);
       // return searchList;
       return searchList;
 
       // return jsonResponse;
     } catch (e) {
       throw e;
+    } finally {
+      searchTextController.clear();
     }
   }
 
@@ -127,30 +132,11 @@ class _SearchNewsState extends State<SearchNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-          child: TextField(
-            controller: searchTextController,
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-            ),
-            decoration: const InputDecoration(
-              hintText: "Search here",
-              prefixIcon: Icon(
-                Icons.search,
-                color: Colors.white,
-                size: 20,
-              ),
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.white,
-                ),
-              ),
-            ),
+        title: const Text(
+          "Search",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         actions: <Widget>[
@@ -163,6 +149,36 @@ class _SearchNewsState extends State<SearchNews> {
                   title: Container(
                     child: Column(
                       children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: TextField(
+                            onEditingComplete: () {
+                              searchNews();
+                            },
+                            controller: searchTextController,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
+                            decoration: const InputDecoration(
+                              hintText: "Search here",
+                              suffixIcon: Icon(
+                                Icons.search,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           child: DropdownButton<String>(
@@ -204,26 +220,30 @@ class _SearchNewsState extends State<SearchNews> {
                       ],
                     ),
                   ),
-                  actions: [
-                    // Container(
-                    //   child: ElevatedButton(
-                    //     child: Text('Ok'),
-                    //     onPressed: () {
-                    //       Navigator.pop(context);
-                    //     },
-                    //   ),
-                    // ),
-                    Container(
-                      child: ElevatedButton(
-                        child: Text('Clear'),
-                        onPressed: () {
-                          clearFilters();
-                          searchNews();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ],
+                  // actions: [
+                  //   Container(
+                  //     child: ElevatedButton(
+                  //       child: Text('Ok'),
+                  //       onPressed: () {
+                  //         searchNews();
+                  //         Navigator.pop(context);
+                  //       },
+                  //     ),
+                  //   ),
+                  //   Container(
+                  //     child: ElevatedButton(
+                  //       child: Text('Clear'),
+                  //       onPressed: () {
+                  //         setState() {
+                  //           dropdownValue = "general";
+                  //         }
+
+                  //         searchNews();
+                  //         Navigator.pop(context);
+                  //       },
+                  //     ),
+                  //   ),
+                  // ],
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10.0),
