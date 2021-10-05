@@ -6,14 +6,14 @@ import "./newscard.widget.dart";
 import "news.model.dart"; // Here is access key as well.
 import "newsstory.widget.dart";
 
-class SearchWidget extends StatefulWidget {
-  const SearchWidget({Key? key}) : super(key: key);
+class SearchNews extends StatefulWidget {
+  const SearchNews({Key? key}) : super(key: key);
 
   @override
-  _SearchWidgetState createState() => _SearchWidgetState();
+  _SearchNewsState createState() => _SearchNewsState();
 }
 
-class _SearchWidgetState extends State<SearchWidget> {
+class _SearchNewsState extends State<SearchNews> {
   final TextEditingController searchTextController = TextEditingController();
   String dropdownValue = "general";
   List<dynamic> searchList = [];
@@ -34,15 +34,16 @@ class _SearchWidgetState extends State<SearchWidget> {
       print(response.body);
       List jsonResponse = jsonDecode(response.body)['data'];
 
-      setState() {
-        searchList = jsonResponse.map((item) => item).toList();
-      }
+      // setState() {
+      print('Populating searchList');
+      searchList = jsonResponse;
+      // }
 
       // initState();
       print("Search List");
       print(searchList);
       // return searchList;
-      // return searchList;
+      return searchList;
 
       // return jsonResponse;
     } catch (e) {
@@ -122,21 +123,6 @@ class _SearchWidgetState extends State<SearchWidget> {
     );
   }
 
-  Future<void> _getData() async {
-    setState(
-      () {
-        searchNews();
-      },
-    );
-    // return searchNews();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    searchNews();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,6 +181,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                             onChanged: (String? newValue) {
                               setState(() {
                                 dropdownValue = newValue!;
+                                searchNews();
                                 Navigator.pop(context);
                               });
                             },
@@ -231,6 +218,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                         child: Text('Clear'),
                         onPressed: () {
                           clearFilters();
+                          searchNews();
                           Navigator.pop(context);
                         },
                       ),
@@ -253,30 +241,35 @@ class _SearchWidgetState extends State<SearchWidget> {
           ),
         ],
       ),
-      body: searchList.length != 0
-          ? Container(
-              child: RefreshIndicator(
+      body: FutureBuilder(
+        future: searchNews(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return Container(
               child: ListView.builder(
-                itemCount: searchList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return buildSearchResults(
-                    NewsModel(
-                      searchList[index]['title'],
-                      image: searchList[index]['image'],
-                      description: searchList[index]['description'],
-                      published_at: searchList[index]['published_at'],
-                    ),
-                  );
-                },
-              ),
-              onRefresh: _getData,
-            ))
-          : Center(
+                  itemCount: searchList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return buildSearchResults(
+                      NewsModel(
+                        searchList[index]['title'],
+                        image: searchList[index]['image'],
+                        description: searchList[index]['description'],
+                        published_at: searchList[index]['published_at'],
+                      ),
+                    );
+                  }),
+            );
+          } else {
+            return Center(
               child: const AwesomeLoader(
                 loaderType: AwesomeLoader.AwesomeLoader3,
                 color: Colors.black,
               ),
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }

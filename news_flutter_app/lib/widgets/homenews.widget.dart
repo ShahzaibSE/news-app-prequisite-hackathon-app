@@ -9,6 +9,7 @@ import "./sports.widget.dart";
 import "./user-auth-container.widget.dart";
 import "./profile.widget.dart";
 import "./search.widget.dart";
+import "./searchnews.widget.dart";
 
 const tabs = <Widget>[
   Tab(
@@ -175,7 +176,7 @@ class _HomeNewsState extends State<HomeNews> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SearchWidget(),
+                        builder: (context) => const SearchNews(),
                       ),
                     );
                   },
