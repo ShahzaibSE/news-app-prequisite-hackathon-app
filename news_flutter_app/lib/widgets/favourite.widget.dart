@@ -14,6 +14,7 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
+  getFAvourites() {}
   //
   Widget buildFavourite(NewsModel headline, int index) {
     return Card(
@@ -90,10 +91,38 @@ class _FavouriteState extends State<Favourite> {
           ),
         ),
       ),
-      body: Container(
-        child: Center(
-          child: Text('Favourite'),
-        ),
+      body: FutureBuilder(
+        future: getFAvourites(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  snapshot.data.length,
+                  (index) => buildFavourite(
+                    NewsModel(
+                      snapshot.data[index]['title'],
+                      image: snapshot.data[index]['image'],
+                      description: snapshot.data[index]['description'],
+                      published_at: snapshot.data[index]['published_at'],
+                    ),
+                    index,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Container(
+              child: const AwesomeLoader(
+                loaderType: AwesomeLoader.AwesomeLoader3,
+                color: Colors.white,
+              ),
+              color: Colors.red,
+            );
+          }
+        },
       ),
     );
   }

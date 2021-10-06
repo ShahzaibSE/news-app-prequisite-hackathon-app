@@ -3,6 +3,7 @@ import 'dart:io';
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import "package:firebase_auth/firebase_auth.dart";
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -30,17 +31,26 @@ class _ProfileState extends State<Profile> {
 
   saveProfile() async {
     try {
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final User user = auth.currentUser as User;
+      final uid = user.uid;
       String name = nameController.text;
       String address = addressController.text;
       String payment = paymentDetailsController.text;
+      String seconds = DateTime.now().second.toString();
+      String default_profile_pic = "/profilepic$seconds.jpg";
+      String namedProfilePic = '/$name.jpg';
+      // print("Firebase user id: $uid");
       // Firestorage Instance.
       firebase_storage.FirebaseStorage storage =
           firebase_storage.FirebaseStorage.instance;
       firebase_storage.Reference ref =
-          firebase_storage.FirebaseStorage.instance.ref('/profile-pic.jpg');
-      print("Path of the selected engineer");
+          firebase_storage.FirebaseStorage.instance.ref("/$uid.png");
+      final profile_pic_download_link = await ref.getDownloadURL();
+      print("Path of the selected image");
       print(imagePath);
-
+      print("Download link");
+      print(profile_pic_download_link.toString());
       // print(DateTime.now().second);
       File file = File(imagePath!);
       await ref.putFile(file);
@@ -167,7 +177,7 @@ class _ProfileState extends State<Profile> {
                   keyboardType: TextInputType.emailAddress,
                   autofocus: true,
                   decoration: InputDecoration(
-                    hintText: "Payment Card Number",
+                    hintText: "Debit/Credit Card Number",
                     hintStyle: const TextStyle(
                       color: Colors.white,
                     ),
