@@ -42,8 +42,8 @@ class _ProfileState extends State<Profile> {
       print(imagePath);
 
       // print(DateTime.now().second);
-      // File file = File(imagePath!);
-      // await ref.putFile(file);
+      File file = File(imagePath!);
+      await ref.putFile(file);
     } catch (e) {
       throw e;
     } finally {
@@ -64,12 +64,19 @@ class _ProfileState extends State<Profile> {
               CircleAvatar(
                 radius: 70,
                 child: ClipOval(
-                  child: Image.asset(
-                    'assets/enlightnment-app-logo.jpeg',
-                    height: 150,
-                    width: 150,
-                    fit: BoxFit.cover,
-                  ),
+                  child: imagePath == null
+                      ? Image.asset(
+                          'assets/enlightnment-app-logo.jpeg',
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          imagePath.toString(),
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
               Positioned(
