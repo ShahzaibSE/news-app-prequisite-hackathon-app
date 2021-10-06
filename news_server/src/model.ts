@@ -32,5 +32,18 @@ export const Favourite = new Schema({
 });
 
 export const Profile = new Schema({
-
+    imageUrl: {
+        type: String,
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    card_number: {
+        type: String
+    }
 });
