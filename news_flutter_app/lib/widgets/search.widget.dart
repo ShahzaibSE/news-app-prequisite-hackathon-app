@@ -51,11 +51,12 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   clearFilters() {
-    // setState() {
-    dropdownValue = "general";
-    // print('Cleared filters');
-    // print(dropdownValue);
-    // }
+    setState(
+      () {
+        dropdownValue = "general";
+        Navigator.pop(context);
+      },
+    );
   }
 
   Widget buildSearchResults(NewsModel searchResult, int index) {
@@ -232,7 +233,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                         child: Text('Clear'),
                         onPressed: () {
                           clearFilters();
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
                         },
                       ),
                     ),

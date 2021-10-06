@@ -183,17 +183,17 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(height: 10),
                   // logo,
                   // const SizedBox(height: 20),
-                  buildTextFormField(
-                    const Key('firstname'),
-                    'first Name',
-                    firstname,
-                  ),
-                  const SizedBox(height: 20),
-                  buildTextFormField(
-                    const Key('lastname'),
-                    'last Name',
-                    lastname,
-                  ),
+                  // buildTextFormField(
+                  //   const Key('firstname'),
+                  //   'first Name',
+                  //   firstname,
+                  // ),
+                  // const SizedBox(height: 20),
+                  // buildTextFormField(
+                  //   const Key('lastname'),
+                  //   'last Name',
+                  //   lastname,
+                  // ),
                   const SizedBox(height: 20),
                   buildTextFormField(
                     const Key('email'),

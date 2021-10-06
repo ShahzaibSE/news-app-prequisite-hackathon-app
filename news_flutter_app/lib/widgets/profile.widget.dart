@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -14,25 +17,40 @@ class _ProfileState extends State<Profile> {
   final TextEditingController paymentDetailsController =
       TextEditingController();
   // Image Picker configs.
+  String? imagePath;
+  //
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
-    final image = await _picker.getImage(source: ImageSource.gallery);
+    final image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imagePath = image!.path;
+      print(imagePath);
+    });
   }
 
-  save() {
-    print(nameController.text);
-    print(addressController.text);
-    print(paymentDetailsController.text);
-  }
+  saveProfile() async {
+    try {
+      String name = nameController.text;
+      String address = addressController.text;
+      String payment = paymentDetailsController.text;
+      // Firestorage Instance.
+      firebase_storage.FirebaseStorage storage =
+          firebase_storage.FirebaseStorage.instance;
+      firebase_storage.Reference ref =
+          firebase_storage.FirebaseStorage.instance.ref('/profile-pic.jpg');
+      print("Path of the selected engineer");
+      print(imagePath);
 
-  saveProfile() {
-    print(nameController.text);
-    print(addressController.text);
-    print(paymentDetailsController.text);
-    nameController.clear();
-    addressController.clear();
-    paymentDetailsController.clear();
-    print("Profile saved");
+      // print(DateTime.now().second);
+      // File file = File(imagePath!);
+      // await ref.putFile(file);
+    } catch (e) {
+      throw e;
+    } finally {
+      nameController.clear();
+      addressController.clear();
+      paymentDetailsController.clear();
+    }
   }
 
   //

@@ -58,11 +58,12 @@ class _SearchNewsState extends State<SearchNews> {
   }
 
   clearFilters() {
-    // setState() {
-    dropdownValue = "general";
-    // print('Cleared filters');
-    // print(dropdownValue);
-    // }
+    setState(
+      () {
+        dropdownValue = "general";
+        Navigator.pop(context);
+      },
+    );
   }
 
   Widget buildSearchResults(NewsModel searchResult, int index) {
@@ -222,30 +223,31 @@ class _SearchNewsState extends State<SearchNews> {
                       ],
                     ),
                   ),
-                  // actions: [
-                  //   Container(
-                  //     child: ElevatedButton(
-                  //       child: Text('Ok'),
-                  //       onPressed: () {
-                  //         searchNews();
-                  //         Navigator.pop(context);
-                  //       },
-                  //     ),
-                  //   ),
-                  //   Container(
-                  //     child: ElevatedButton(
-                  //       child: Text('Clear'),
-                  //       onPressed: () {
-                  //         setState() {
-                  //           dropdownValue = "general";
-                  //         }
+                  actions: [
+                    Container(
+                      child: ElevatedButton(
+                        child: Text('Ok'),
+                        onPressed: () {
+                          searchNews();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        child: Text('Clear'),
+                        onPressed: () {
+                          // setState() {
+                          //   dropdownValue = "general";
+                          // }
 
-                  //         searchNews();
-                  //         Navigator.pop(context);
-                  //       },
-                  //     ),
-                  //   ),
-                  // ],
+                          // searchNews();
+                          // Navigator.pop(context);
+                          clearFilters();
+                        },
+                      ),
+                    ),
+                  ],
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10.0),

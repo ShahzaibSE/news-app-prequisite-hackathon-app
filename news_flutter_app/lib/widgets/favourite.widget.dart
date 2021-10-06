@@ -3,6 +3,8 @@ import 'package:awesome_loader/awesome_loader.dart';
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "./newscard.widget.dart";
+import "./newsstory.widget.dart";
+import "./news.model.dart";
 
 class Favourite extends StatefulWidget {
   const Favourite({Key? key}) : super(key: key);
@@ -12,8 +14,87 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
+  //
+  Widget buildFavourite(NewsModel headline, int index) {
+    return Card(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewsStory(
+                index: index,
+                news: NewsModel(
+                  headline.title,
+                  image: headline.image,
+                  description: headline.description,
+                  published_at: headline.published_at,
+                ),
+              ),
+            ),
+          );
+        },
+        child: ListTile(
+          // minLeadingWidth: 60,
+          contentPadding: const EdgeInsets.all(10),
+          leading: FittedBox(
+            child: headline.image == null
+                ? Image(
+                    fit: BoxFit.fill,
+                    image: AssetImage(
+                      "assets/enlightnment-app-logo.jpeg",
+                    ),
+                    width: MediaQuery.of(context).size.width / 4,
+                    height: 80,
+                  )
+                : Image(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(
+                      headline.image.toString(),
+                    ),
+                    width: MediaQuery.of(context).size.width / 4,
+                    height: 80,
+                  ),
+          ),
+          title: Container(
+            // padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              headline.title.characters.take(50).toString() + "...",
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+          ),
+          subtitle: Container(
+            // padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              DateTime.parse(headline.published_at.toString()).hour.toString() +
+                  "h",
+              style: const TextStyle(
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Profile",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: Container(
+        child: Center(
+          child: Text('Favourite'),
+        ),
+      ),
+    );
   }
 }
