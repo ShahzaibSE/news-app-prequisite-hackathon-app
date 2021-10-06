@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import path from 'path';
 import helmet from 'helmet';
+import cors from 'cors';
 
 import express, { NextFunction, Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
@@ -10,6 +11,7 @@ import 'express-async-errors';
 import mongoose from 'mongoose';
 // Routes. 
 import user_router from "./routes/user.router";
+import favourite_router from "./routes/favourite.router";
 
 const app = express();
 const { BAD_REQUEST } = StatusCodes;
@@ -33,9 +35,11 @@ mongoose.connect(mongodb_con_string, {
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(cors());
 
 // Routes
 app.use("/user", user_router);
+app.use("/favourite", favourite_router);
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Profile = exports.Favourite = exports.User = void 0;
 const mongoose_1 = require("mongoose");
 exports.User = new mongoose_1.Schema({
     firstname: {
@@ -20,3 +20,14 @@ exports.User = new mongoose_1.Schema({
         required: true
     },
 });
+exports.Favourite = new mongoose_1.Schema({
+    uid: {
+        type: String,
+        required: true
+    },
+    favourites: {
+        type: Array,
+        default: []
+    }
+});
+exports.Profile = new mongoose_1.Schema({});

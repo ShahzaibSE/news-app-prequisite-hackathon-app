@@ -8,5 +8,7 @@ const model_1 = require("./../model");
 const mongoose_1 = __importDefault(require("mongoose"));
 const dbInjector = () => ({
     user: mongoose_1.default.model('User', model_1.User),
+    favourite: mongoose_1.default.model('Favourite', model_1.Favourite),
+    profile: mongoose_1.default.model('Profile', model_1.Profile)
 });
 exports.dbInjector = dbInjector;

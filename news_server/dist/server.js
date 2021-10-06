@@ -7,12 +7,14 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const path_1 = __importDefault(require("path"));
 const helmet_1 = __importDefault(require("helmet"));
+const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 require("express-async-errors");
 const mongoose_1 = __importDefault(require("mongoose"));
 // Routes. 
 const user_router_1 = __importDefault(require("./routes/user.router"));
+const favourite_router_1 = __importDefault(require("./routes/favourite.router"));
 const app = express_1.default();
 const { BAD_REQUEST } = http_status_codes_1.default;
 /************************************************************************************
@@ -31,8 +33,10 @@ mongoose_1.default.connect(mongodb_con_string, {
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cookie_parser_1.default());
+app.use(cors_1.default());
 // Routes
 app.use("/user", user_router_1.default);
+app.use("/favourite", favourite_router_1.default);
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan_1.default('dev'));

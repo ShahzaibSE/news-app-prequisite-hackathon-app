@@ -19,3 +19,18 @@ export const User:Schema  = new Schema({
     },
     
 });
+
+export const Favourite = new Schema({
+    uid: {
+        type: String,
+        required: true
+    },
+    favourites: {
+        type: Array,
+        default: []
+    }
+});
+
+export const Profile = new Schema({
+
+});
