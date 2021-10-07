@@ -115,9 +115,11 @@ class _FavouriteState extends State<Favourite> {
             );
           } else {
             return Container(
-              child: const AwesomeLoader(
-                loaderType: AwesomeLoader.AwesomeLoader3,
-                color: Colors.white,
+              child: Center(
+                child: const AwesomeLoader(
+                  loaderType: AwesomeLoader.AwesomeLoader3,
+                  color: Colors.white,
+                ),
               ),
               color: Colors.red,
             );

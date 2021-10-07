@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 // Widgets.
 import "./topnews.widget.dart";
 import "./headline.widget.dart";
@@ -11,6 +13,8 @@ import "./profile.widget.dart";
 import "./search.widget.dart";
 import "./searchnews.widget.dart";
 import "./favourite.widget.dart";
+// Model.
+import "./news.model.dart";
 
 const tabs = <Widget>[
   Tab(
@@ -61,6 +65,8 @@ class HomeNews extends StatefulWidget {
 
 class _HomeNewsState extends State<HomeNews> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  dynamic profile;
+
   logout() async {
     print("Logout button tapped.");
     await FirebaseAuth.instance.signOut();
@@ -74,6 +80,39 @@ class _HomeNewsState extends State<HomeNews> {
       ),
       (Route<dynamic> route) => false,
     );
+  }
+
+  getProfile() async {
+    ProfileModel profile;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser as User;
+    final uid = user.uid;
+    var uri = Uri.http(
+      "localhost:3000",
+      "/profile/yourprofile/$uid",
+    );
+    var response = await http.get(uri);
+    var jsonResponse = jsonDecode(response.body);
+    print('Your Profile');
+    print(jsonResponse);
+    setState(() {
+      profile = jsonResponse;
+    });
+
+    // return Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => Profile(
+    //       yourProfile: ProfileModel(
+    //         uid: jsonResponse['uid'],
+    //         name: jsonResponse['name'],
+    //         address: jsonResponse['address'],
+    //         card_number: jsonResponse['card_number'],
+    //         imageUrl: jsonResponse['imageUrl'],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget buildDrawer() {
@@ -110,6 +149,7 @@ class _HomeNewsState extends State<HomeNews> {
             title: const Text('Profile'),
             // onTap: () => {Navigator.of(context).pop()},
             onTap: () => {
+              // getProfile();
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -152,6 +192,7 @@ class _HomeNewsState extends State<HomeNews> {
   //
   @override
   Widget build(BuildContext context) {
+    // getProfile();
     return DefaultTabController(
       length: tabs.length,
       // The Builder widget is used to have a different BuildContext to access

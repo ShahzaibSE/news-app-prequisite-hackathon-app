@@ -1,13 +1,19 @@
 import 'dart:io';
+import 'dart:convert';
 
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import "package:firebase_auth/firebase_auth.dart";
 import "package:http/http.dart" as http;
+import 'package:awesome_loader/awesome_loader.dart';
+import "news.model.dart";
 
 class Profile extends StatefulWidget {
+  // const Profile({Key? key, required this.yourProfile}) : super(key: key);
   const Profile({Key? key}) : super(key: key);
+
+  // final ProfileModel yourProfile;
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -22,6 +28,22 @@ class _ProfileState extends State<Profile> {
   String? imagePath;
   String? downloadLink;
   bool isEditable = false;
+  //
+  getProfile() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser as User;
+    final uid = user.uid;
+    var uri = Uri.http(
+      "localhost:3000",
+      "/profile/yourprofile/$uid",
+    );
+    var response = await http.get(uri);
+    var jsonResponse = jsonDecode(response.body);
+    print("Your profile");
+    print(jsonResponse);
+    return jsonResponse['data'];
+  }
+
   //
   toEdit() {
     setState(() {
@@ -92,170 +114,177 @@ class _ProfileState extends State<Profile> {
 
   //
   Widget profileView() {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 20, 0, 50),
-          child: Stack(
+    return FutureBuilder(
+        future: getProfile(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return Column(
             children: <Widget>[
-              CircleAvatar(
-                radius: 70,
-                child: ClipOval(
-                  child: imagePath == null
-                      ? Image.asset(
-                          'assets/enlightnment-app-logo.jpeg',
-                          height: 150,
-                          width: 150,
-                          fit: BoxFit.cover,
-                        )
-                      : downloadLink == null
-                          ? Image.asset(
-                              imagePath.toString(),
-                              height: 150,
-                              width: 150,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.network(
-                              downloadLink!,
-                              height: 150,
-                              width: 150,
-                              fit: BoxFit.cover,
-                            ),
-                ),
-              ),
-              Positioned(
-                  bottom: 1,
-                  right: 1,
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    child: GestureDetector(
-                      onTap: () {
-                        print("Upload your picture");
-                        pickImage();
-                      },
-                      child: Icon(
-                        Icons.add_a_photo,
-                        color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 50),
+                child: Stack(
+                  children: <Widget>[
+                    CircleAvatar(
+                      radius: 70,
+                      child: ClipOval(
+                        child: imagePath == null
+                            ? Image.asset(
+                                'assets/enlightnment-app-logo.jpeg',
+                                height: 150,
+                                width: 150,
+                                fit: BoxFit.cover,
+                              )
+                            : downloadLink == null
+                                ? Image.asset(
+                                    imagePath.toString(),
+                                    height: 150,
+                                    width: 150,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    downloadLink!,
+                                    height: 150,
+                                    width: 150,
+                                    fit: BoxFit.cover,
+                                  ),
                       ),
                     ),
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrange,
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                  ))
-            ],
-          ),
-        ),
-        Expanded(
-            child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Colors.black54,
-                Color.fromRGBO(0, 41, 102, 1),
-              ],
-            ),
-          ),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
-                child: TextFormField(
-                  enabled: isEditable,
-                  controller: nameController,
-                  key: const Key("name"),
-                  keyboardType: TextInputType.emailAddress,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: "Name",
-                    hintStyle: const TextStyle(
-                      color: Colors.white,
-                    ),
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  ),
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
-                child: TextFormField(
-                  enabled: isEditable,
-                  controller: addressController,
-                  key: const Key("address"),
-                  keyboardType: TextInputType.emailAddress,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    hintText: "Address",
-                    hintStyle: const TextStyle(
-                      color: Colors.white,
-                    ),
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  ),
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
-                child: TextFormField(
-                  enabled: isEditable,
-                  controller: paymentDetailsController,
-                  key: const Key("payment-card-number"),
-                  keyboardType: TextInputType.emailAddress,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: "Debit/Credit Card Number",
-                    hintStyle: const TextStyle(
-                      color: Colors.white,
-                    ),
-                    focusColor: Colors.white,
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  ),
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
+                    Positioned(
+                        bottom: 1,
+                        right: 1,
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          child: GestureDetector(
+                            onTap: () {
+                              print("Upload your picture");
+                              pickImage();
+                            },
+                            child: Icon(
+                              Icons.add_a_photo,
+                              color: Colors.white,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.deepOrange,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                        ))
+                  ],
                 ),
               ),
               Expanded(
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: GestureDetector(
-                    onTap: saveProfile,
-                    child: Container(
-                      height: 70,
-                      width: 200,
-                      child: Align(
-                        child: Text(
-                          'Save',
-                          style: TextStyle(color: Colors.white70, fontSize: 20),
+                  child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Colors.black54,
+                      Color.fromRGBO(0, 41, 102, 1),
+                    ],
+                  ),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
+                      child: TextFormField(
+                        enabled: isEditable,
+                        controller: nameController,
+                        key: const Key("name"),
+                        keyboardType: TextInputType.emailAddress,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          hintText: "Name",
+                          hintStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
+                        style: const TextStyle(
+                          color: Colors.white,
                         ),
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
+                      child: TextFormField(
+                        enabled: isEditable,
+                        controller: addressController,
+                        key: const Key("address"),
+                        keyboardType: TextInputType.emailAddress,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: "Address",
+                          hintStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
+                      child: TextFormField(
+                        enabled: isEditable,
+                        controller: paymentDetailsController,
+                        key: const Key("payment-card-number"),
+                        keyboardType: TextInputType.emailAddress,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          hintText: "Debit/Credit Card Number",
+                          hintStyle: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          focusColor: Colors.white,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: GestureDetector(
+                          onTap: saveProfile,
+                          child: Container(
+                            height: 70,
+                            width: 200,
+                            child: Align(
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                    color: Colors.white70, fontSize: 20),
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              )
+              ))
             ],
-          ),
-        ))
-      ],
-    );
+          );
+        });
   }
 
   @override

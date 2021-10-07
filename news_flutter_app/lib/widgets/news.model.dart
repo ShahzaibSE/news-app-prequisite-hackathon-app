@@ -27,6 +27,22 @@ class NewsModel {
   });
 }
 
+class ProfileModel {
+  String? imageUrl;
+  String? name;
+  String? uid;
+  String? address;
+  String? card_number;
+
+  ProfileModel({
+    this.name,
+    this.address,
+    this.imageUrl,
+    this.uid,
+    this.card_number,
+  });
+}
+
 List categories = [
   "general",
   "business",
