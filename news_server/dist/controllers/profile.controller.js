@@ -13,7 +13,7 @@ const getProfile = async (req, res) => {
             resCode: 200,
             message: "Profile found successfully",
             isError: false,
-            data: yourProfile
+            data: yourProfile,
         });
     }
     else {
@@ -21,7 +21,7 @@ const getProfile = async (req, res) => {
             status: false,
             resCode: 400,
             message: "Profile not found",
-            isError: true
+            isError: true,
         });
     }
 };
@@ -31,12 +31,23 @@ const createProfile = async (req, res) => {
     //
     const existingProfile = await profileModel.findOne({ uid });
     if (existingProfile) {
-        res.status(403).send({
-            status: false,
-            resCode: 403,
-            message: "Profile already exists",
-            isError: true,
-        });
+        let updatedProfile = await profileModel.updateOne({ uid }, { $set: { imageUrl, name, address, card_number } });
+        if (updatedProfile) {
+            res.status(200).send({
+                status: true,
+                resCode: 200,
+                message: "Profile updated successfully",
+                isError: false,
+            });
+        }
+        else {
+            res.status(400).send({
+                status: false,
+                resCode: 400,
+                message: "Error while updating profile",
+                isError: true
+            });
+        }
     }
     else {
         let newProfile = new profileModel({
