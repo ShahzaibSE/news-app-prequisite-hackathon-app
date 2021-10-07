@@ -1,9 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateProfile = exports.createProfile = void 0;
+exports.updateProfile = exports.createProfile = exports.getProfile = void 0;
 // Models.
 const dbInjector_1 = require("./dbInjector");
 const profileModel = dbInjector_1.dbInjector().profile;
+const getProfile = async (req, res) => {
+    const { uid } = req.params;
+    var yourProfile = await profileModel.findOne({ uid });
+    if (yourProfile) {
+        res.status(200).send({
+            status: true,
+            resCode: 200,
+            message: "Profile found successfully",
+            isError: false,
+            data: yourProfile
+        });
+    }
+    else {
+        res.status(200).send({
+            status: false,
+            resCode: 400,
+            message: "Profile not found",
+            isError: true
+        });
+    }
+};
+exports.getProfile = getProfile;
 const createProfile = async (req, res) => {
     const { uid, imageUrl, name, address, card_number } = req.body;
     //
