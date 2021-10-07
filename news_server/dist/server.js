@@ -15,6 +15,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 // Routes. 
 const user_router_1 = __importDefault(require("./routes/user.router"));
 const favourite_router_1 = __importDefault(require("./routes/favourite.router"));
+const profile_router_1 = __importDefault(require("./routes/profile.router"));
 const app = express_1.default();
 const { BAD_REQUEST } = http_status_codes_1.default;
 /************************************************************************************
@@ -37,6 +38,7 @@ app.use(cors_1.default());
 // Routes
 app.use("/user", user_router_1.default);
 app.use("/favourite", favourite_router_1.default);
+app.use("/profile", profile_router_1.default);
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan_1.default('dev'));

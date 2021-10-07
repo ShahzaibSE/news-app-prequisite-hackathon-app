@@ -20,14 +20,75 @@ exports.User = new mongoose_1.Schema({
         required: true
     },
 });
+// export const Favourite = new Schema({
+//     uid: {
+//         type: String,
+//         required: true
+//     },
+//     favourites: {
+//         type: Array,
+//         default: [{}]
+//     }
+// });
 exports.Favourite = new mongoose_1.Schema({
     uid: {
         type: String,
         required: true
     },
-    favourites: {
-        type: Array,
-        default: []
+    title: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    image: {
+        type: String
+    },
+    video: {
+        type: String
+    },
+    time: {
+        type: String
+    },
+    published_at: {
+        type: String
+    },
+    category: {
+        type: String
+    },
+    author: {
+        type: String
+    },
+    url: {
+        type: String
+    },
+    source: {
+        type: String
+    },
+    country: {
+        type: String
+    },
+    createdAt: {
+        type: String,
+        default: new Date().toISOString()
     }
 });
-exports.Profile = new mongoose_1.Schema({});
+exports.Profile = new mongoose_1.Schema({
+    uid: {
+        type: String,
+        required: true
+    },
+    imageUrl: {
+        type: String,
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+    },
+    card_number: {
+        type: String
+    }
+});
