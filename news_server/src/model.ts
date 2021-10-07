@@ -20,18 +20,66 @@ export const User:Schema  = new Schema({
     
 });
 
+// export const Favourite = new Schema({
+//     uid: {
+//         type: String,
+//         required: true
+//     },
+//     favourites: {
+//         type: Array,
+//         default: [{}]
+//     }
+// });
+
 export const Favourite = new Schema({
     uid: {
         type: String,
         required: true
     },
-    favourites: {
-        type: Array,
-        default: []
+    title: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    image:{
+        type: String
+    },
+    video:{
+        type: String
+    },
+    time:{
+        type: String
+    },
+    published_at:{
+        type: String
+    },
+    category:{
+        type: String
+    },
+    author:{
+        type: String
+    },
+    url:{
+        type: String
+    },
+    source:{
+        type: String
+    },
+    country:{
+        type: String
+    },
+    createdAt: {
+        type: String,
+        default: new Date().toISOString()
     }
-});
+})
 
 export const Profile = new Schema({
+    uid: {
+        type: String,
+        required: true
+    },
     imageUrl: {
         type: String,
     },
@@ -41,7 +89,6 @@ export const Profile = new Schema({
     },
     address: {
         type: String,
-        required: true
     },
     card_number: {
         type: String

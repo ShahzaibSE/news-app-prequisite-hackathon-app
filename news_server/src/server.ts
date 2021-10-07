@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 // Routes. 
 import user_router from "./routes/user.router";
 import favourite_router from "./routes/favourite.router";
+import profile_router from "./routes/profile.router";
 
 const app = express();
 const { BAD_REQUEST } = StatusCodes;
@@ -40,6 +41,7 @@ app.use(cors());
 // Routes
 app.use("/user", user_router);
 app.use("/favourite", favourite_router);
+app.use("/profile", profile_router);
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
