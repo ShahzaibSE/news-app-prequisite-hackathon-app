@@ -10,6 +10,7 @@ import "./user-auth-container.widget.dart";
 import "./profile.widget.dart";
 import "./search.widget.dart";
 import "./searchnews.widget.dart";
+import "./favourite.widget.dart";
 
 const tabs = <Widget>[
   Tab(
@@ -100,7 +101,9 @@ class _HomeNewsState extends State<HomeNews> {
           ListTile(
             leading: const Icon(Icons.input),
             title: const Text('Welcome'),
-            onTap: () => {},
+            onTap: () => {
+              Navigator.pop(context),
+            },
           ),
           ListTile(
             leading: const Icon(Icons.verified_user),
@@ -118,7 +121,14 @@ class _HomeNewsState extends State<HomeNews> {
           ListTile(
             leading: const Icon(Icons.favorite_rounded),
             title: const Text('Favourite'),
-            onTap: () => {},
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Favourite(),
+                ),
+              ),
+            },
           ),
           const Divider(
             key: Key('divider-profile'),

@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import "package:firebase_auth/firebase_auth.dart";
+import "package:http/http.dart" as http;
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -19,6 +20,15 @@ class _ProfileState extends State<Profile> {
       TextEditingController();
   // Image Picker configs.
   String? imagePath;
+  String? downloadLink;
+  bool isEditable = false;
+  //
+  toEdit() {
+    setState(() {
+      isEditable = !isEditable;
+    });
+  }
+
   //
   void pickImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -51,9 +61,26 @@ class _ProfileState extends State<Profile> {
       print(imagePath);
       print("Download link");
       print(profile_pic_download_link.toString());
+      setState(() {
+        downloadLink = profile_pic_download_link.toString();
+      });
       // print(DateTime.now().second);
       File file = File(imagePath!);
       await ref.putFile(file);
+      var createdProfileURI = Uri.http(
+        "localhost:3000",
+        "/profile/create",
+      );
+      var response = await http.post(
+        createdProfileURI,
+        body: {
+          'uid': uid,
+          'name': name,
+          'address': address,
+          'card_number': payment,
+          "imageUrl": downloadLink.toString()
+        },
+      );
     } catch (e) {
       throw e;
     } finally {
@@ -81,12 +108,19 @@ class _ProfileState extends State<Profile> {
                           width: 150,
                           fit: BoxFit.cover,
                         )
-                      : Image.asset(
-                          imagePath.toString(),
-                          height: 150,
-                          width: 150,
-                          fit: BoxFit.cover,
-                        ),
+                      : downloadLink == null
+                          ? Image.asset(
+                              imagePath.toString(),
+                              height: 150,
+                              width: 150,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              downloadLink!,
+                              height: 150,
+                              width: 150,
+                              fit: BoxFit.cover,
+                            ),
                 ),
               ),
               Positioned(
@@ -131,6 +165,7 @@ class _ProfileState extends State<Profile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
                 child: TextFormField(
+                  enabled: isEditable,
                   controller: nameController,
                   key: const Key("name"),
                   keyboardType: TextInputType.emailAddress,
@@ -151,6 +186,7 @@ class _ProfileState extends State<Profile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
                 child: TextFormField(
+                  enabled: isEditable,
                   controller: addressController,
                   key: const Key("address"),
                   keyboardType: TextInputType.emailAddress,
@@ -172,6 +208,7 @@ class _ProfileState extends State<Profile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
                 child: TextFormField(
+                  enabled: isEditable,
                   controller: paymentDetailsController,
                   key: const Key("payment-card-number"),
                   keyboardType: TextInputType.emailAddress,
@@ -225,14 +262,27 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+          title: const Text(
+            "Profile",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ),
+          actions: <Widget>[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: GestureDetector(
+                onTap: () {
+                  toEdit();
+                },
+                child: const Icon(
+                  Icons.edit,
+                  size: 26.0,
+                ),
+              ),
+            )
+          ]),
       body: profileView(),
     );
   }
