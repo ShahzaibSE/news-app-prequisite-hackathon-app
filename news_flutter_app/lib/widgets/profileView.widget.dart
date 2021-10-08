@@ -63,8 +63,6 @@ class _ViewProfileState extends State<ViewProfile> {
     return FutureBuilder(
       future: getProfile(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        print("Getting profile details - Future");
-        print(snapshot.data['data']['imageUrl']);
         if (snapshot.connectionState == ConnectionState.done) {
           return Column(
             children: <Widget>[
