@@ -58,8 +58,6 @@ const createProfile = async (req, res) => {
             card_number,
         });
         let createdProfile = await newProfile.save();
-        console.log("Profile created");
-        console.log(createdProfile);
         res.setHeader("Content-Type", "application/json");
         res.status(200).send({
             status: true,
