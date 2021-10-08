@@ -13,6 +13,7 @@ import "./profile.widget.dart";
 import "./search.widget.dart";
 import "./searchnews.widget.dart";
 import "./favourite.widget.dart";
+import "./profileView.widget.dart";
 // Model.
 import "./news.model.dart";
 
@@ -153,7 +154,7 @@ class _HomeNewsState extends State<HomeNews> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const Profile(),
+                  builder: (context) => const ViewProfile(),
                 ),
               ),
             },

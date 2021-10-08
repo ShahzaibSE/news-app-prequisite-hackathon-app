@@ -14,7 +14,7 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
-  getFAvourites() {}
+  getFavourites() {}
   //
   Widget buildFavourite(NewsModel headline, int index) {
     return Card(
@@ -84,7 +84,7 @@ class _FavouriteState extends State<Favourite> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Profile",
+          "Favourites",
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class _FavouriteState extends State<Favourite> {
         ),
       ),
       body: FutureBuilder(
-        future: getFAvourites(),
+        future: getFavourites(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return SingleChildScrollView(
