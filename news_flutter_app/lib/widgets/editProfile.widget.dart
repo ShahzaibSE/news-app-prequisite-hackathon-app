@@ -8,6 +8,7 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:http/http.dart" as http;
 import 'package:awesome_loader/awesome_loader.dart';
 import "news.model.dart";
+import "./homenews.widget.dart";
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _EditProfileState extends State<EditProfile> {
   // Image Picker configs.
   String? imagePath;
   String? downloadLink;
-  bool isEditable = false;
+  bool isEditable = true;
   //
   getProfile() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -281,26 +282,14 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            "Edit Profile",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+        title: const Text(
+          "Edit Profile",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
-          actions: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(
-                  Icons.edit,
-                  size: 26.0,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ]),
+        ),
+      ),
       body: profileView(),
     );
   }

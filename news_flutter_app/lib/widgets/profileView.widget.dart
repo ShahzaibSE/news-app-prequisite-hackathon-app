@@ -40,8 +40,6 @@ class _ViewProfileState extends State<ViewProfile> {
       );
       var response = await http.get(uri);
       var jsonResponse = jsonDecode(response.body);
-      print("Your profile");
-      print(jsonResponse);
       return jsonResponse;
     } catch (e) {
       throw e;
@@ -208,7 +206,7 @@ class _ViewProfileState extends State<ViewProfile> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const EditProfile(),
