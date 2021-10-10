@@ -14,14 +14,23 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds: 6,
-      image: Image.asset(
-        'assets/welcome-app.png',
-        colorBlendMode: BlendMode.clear,
-      ),
+      // image: Image.asset(
+      //   'assets/welcome-app.png',
+      //   colorBlendMode: BlendMode.clear,
+      // ),
       navigateAfterSeconds: const UserAuth(),
-      loaderColor: Colors.red,
+      loaderColor: Colors.white,
       photoSize: 100.0,
-      title: const Text("Welcome to the News"),
+      title: const Text(
+        'Welcome to the  Enlightenment',
+        style: TextStyle(
+          fontFamily: "Royale",
+          fontSize: 50,
+          color: Colors.white,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: Colors.red,
     );
   }
 }
