@@ -52,6 +52,7 @@ class _EditProfileState extends State<EditProfile> {
 
   saveProfile() async {
     try {
+      var existingProfile = await getProfile();
       final FirebaseAuth auth = FirebaseAuth.instance;
       final User user = auth.currentUser as User;
       final uid = user.uid;
@@ -59,8 +60,7 @@ class _EditProfileState extends State<EditProfile> {
       String address = addressController.text;
       String payment = paymentDetailsController.text;
       String seconds = DateTime.now().second.toString();
-      String default_profile_pic = "/profilepic$seconds.jpg";
-      String namedProfilePic = '/$name.jpg';
+      String imageUrl = existingProfile['data']['imageUrl'];
       // print("Firebase user id: $uid");
       // Firestorage Instance.
       firebase_storage.FirebaseStorage storage =
@@ -75,6 +75,11 @@ class _EditProfileState extends State<EditProfile> {
       print(imagePath);
       print("Download link");
       print(profile_pic_download_link.toString());
+      //
+      // if (address == '') {
+      // print('Existing profile');
+      // print(existingProfile);
+      // }
       setState(() {
         downloadLink = profile_pic_download_link.toString();
       });
@@ -85,14 +90,42 @@ class _EditProfileState extends State<EditProfile> {
         "localhost:3000",
         "/profile/create",
       );
+      Map<String, String> profileData = {};
+      if (name == '') {
+        profileData.update(
+          'name',
+          (value) => existingProfile['data']['name'],
+          ifAbsent: () => existingProfile['data']['name'],
+        );
+      }
+      if (address == '') {
+        profileData.update(
+          'address',
+          (value) => existingProfile['data']['address'],
+          ifAbsent: () => existingProfile['data']['address'],
+        );
+      }
+      if (payment == '') {
+        profileData.update(
+          'payment',
+          (value) => existingProfile['data']['payment'],
+          ifAbsent: () => existingProfile['data']['payment'],
+        );
+      }
+      print('Profile Data');
+      print(profileData['address'].toString());
       var response = await http.post(
         createdProfileURI,
         body: {
           'uid': uid,
-          'name': name,
-          'address': address,
-          'card_number': payment,
-          "imageUrl": downloadLink.toString()
+          'name': name == '' ? existingProfile['data']['name'] : name,
+          'address':
+              address == '' ? existingProfile['data']['address'] : address,
+          'card_number':
+              payment == '' ? existingProfile['data']['card_number'] : payment,
+          "imageUrl": imageUrl == ''
+              ? existingProfile['data']['imageUrl']
+              : downloadLink.toString()
         },
       );
     } catch (e) {

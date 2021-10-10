@@ -71,13 +71,20 @@ class _ViewProfileState extends State<ViewProfile> {
                     CircleAvatar(
                       radius: 70,
                       child: ClipOval(
-                          child: Image.network(
-                        // 'assets/enlightnment-app-logo.jpeg',
-                        snapshot.data['data']['imageUrl'].toString(),
-                        height: 150,
-                        width: 150,
-                        fit: BoxFit.cover,
-                      )),
+                        child: snapshot.data['data']['imageUrl'] == null
+                            ? Image.asset(
+                                'assets/enlightnment-app-logo.jpeg',
+                                height: 150,
+                                width: 150,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                snapshot.data['data']['imageUrl'].toString(),
+                                height: 150,
+                                width: 150,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
                     ),
                   ],
                 ),
