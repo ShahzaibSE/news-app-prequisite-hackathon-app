@@ -68,13 +68,6 @@ class _EditProfileState extends State<EditProfile> {
       firebase_storage.Reference ref =
           firebase_storage.FirebaseStorage.instance.ref("/$uid.png");
       final profile_pic_download_link = await ref.getDownloadURL();
-      print(name);
-      print(address);
-      print(payment);
-      print("Path of the selected image");
-      print(imagePath);
-      print("Download link");
-      print(profile_pic_download_link.toString());
       //
       // if (address == '') {
       // print('Existing profile');
@@ -90,30 +83,6 @@ class _EditProfileState extends State<EditProfile> {
         "localhost:3000",
         "/profile/create",
       );
-      Map<String, String> profileData = {};
-      if (name == '') {
-        profileData.update(
-          'name',
-          (value) => existingProfile['data']['name'],
-          ifAbsent: () => existingProfile['data']['name'],
-        );
-      }
-      if (address == '') {
-        profileData.update(
-          'address',
-          (value) => existingProfile['data']['address'],
-          ifAbsent: () => existingProfile['data']['address'],
-        );
-      }
-      if (payment == '') {
-        profileData.update(
-          'payment',
-          (value) => existingProfile['data']['payment'],
-          ifAbsent: () => existingProfile['data']['payment'],
-        );
-      }
-      print('Profile Data');
-      print(profileData['address'].toString());
       var response = await http.post(
         createdProfileURI,
         body: {
