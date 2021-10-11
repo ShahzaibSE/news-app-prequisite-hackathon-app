@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:awesome_loader/awesome_loader.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "./newscard.widget.dart";
@@ -14,7 +15,23 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
-  getFavourites() async {}
+  getFavourites() async {
+    try {
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final User user = auth.currentUser as User;
+      final uid = user.uid;
+      var uri = Uri.http(
+        "localhost:3000",
+        "/favourite/list",
+      );
+      var response = await http.get(uri);
+      var jsonResponse = jsonDecode(response.body);
+      return jsonResponse['data'];
+    } catch (e) {
+      throw e;
+    }
+  }
+
   //
   deleteFavourite() async {}
   //
