@@ -79,39 +79,6 @@ class NewsCard extends StatelessWidget {
                   ),
                 ),
               ),
-              // Stack(
-              //   children: [
-              //     Align(
-              //       alignment: Alignment.centerLeft,
-              //       child: Container(
-              //         padding: const EdgeInsets.symmetric(
-              //           horizontal: 10.0,
-              //           vertical: 10.0,
-              //         ),
-              //         child: const Text(
-              //           "1 hour",
-              //           style: const TextStyle(
-              //             fontSize: 15,
-              //             color: Colors.grey,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Align(
-              //       alignment: Alignment.centerRight,
-              //       child: Container(
-              //         padding: const EdgeInsets.symmetric(
-              //           horizontal: 10.0,
-              //           vertical: 10.0,
-              //         ),
-              //         child: IconButton(
-              //           onPressed: () {},
-              //           icon: const Icon(Icons.favorite_rounded),
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // )
             ],
           ),
         ),
