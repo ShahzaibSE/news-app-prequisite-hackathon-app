@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 //
 import "./news.model.dart";
 
-class NewsStory extends StatelessWidget {
+class NewsStory extends StatefulWidget {
   const NewsStory({Key? key, required this.news, required this.index})
       : super(key: key);
 
@@ -10,11 +10,16 @@ class NewsStory extends StatelessWidget {
   final int index;
 
   @override
+  _NewsStoryState createState() => _NewsStoryState();
+}
+
+class _NewsStoryState extends State<NewsStory> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          news.title,
+          widget.news.title,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -25,7 +30,7 @@ class NewsStory extends StatelessWidget {
             padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               key: Key(
-                index.toString(),
+                widget.index.toString(),
               ),
               onTap: () {
                 print('Added to favourites');
@@ -34,7 +39,7 @@ class NewsStory extends StatelessWidget {
                 Icons.favorite_rounded,
                 size: 26.0,
                 key: Key(
-                  index.toString(),
+                  widget.index.toString(),
                 ),
               ),
             ),
@@ -50,7 +55,7 @@ class NewsStory extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                child: news.image == null
+                child: widget.news.image == null
                     ? Image(
                         fit: BoxFit.fitWidth,
                         image: AssetImage(
@@ -62,7 +67,7 @@ class NewsStory extends StatelessWidget {
                     : Image(
                         fit: BoxFit.fitWidth,
                         image: NetworkImage(
-                          news.image.toString(),
+                          widget.news.image.toString(),
                         ),
                         width: MediaQuery.of(context).size.width,
                         height: 80,
@@ -71,7 +76,7 @@ class NewsStory extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Text(
-                  news.title,
+                  widget.news.title,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -85,7 +90,9 @@ class NewsStory extends StatelessWidget {
                 ),
                 child: Text(
                   // "1h",
-                  DateTime.parse(news.published_at.toString()).hour.toString() +
+                  DateTime.parse(widget.news.published_at.toString())
+                          .hour
+                          .toString() +
                       "h",
                   style: const TextStyle(
                     fontSize: 15,
@@ -106,7 +113,7 @@ class NewsStory extends StatelessWidget {
                   //     fontSize: 15,
                   //   ),
                   child: Text(
-                    news.description.toString(),
+                    widget.news.description.toString(),
                     style: const TextStyle(
                       fontSize: 15,
                     ),
@@ -120,3 +127,122 @@ class NewsStory extends StatelessWidget {
     );
   }
 }
+
+// class NewsStory extends StatelessWidget {
+//   const NewsStory({Key? key, required this.news, required this.index})
+//       : super(key: key);
+
+//   final NewsModel news;
+//   final int index;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(
+//           news.title,
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontWeight: FontWeight.bold,
+//           ),
+//         ),
+//         actions: <Widget>[
+//           Padding(
+//             padding: const EdgeInsets.only(right: 20.0),
+//             child: GestureDetector(
+//               key: Key(
+//                 index.toString(),
+//               ),
+//               onTap: () {
+//                 print('Added to favourites');
+//               },
+//               child: Icon(
+//                 Icons.favorite_rounded,
+//                 size: 26.0,
+//                 key: Key(
+//                   index.toString(),
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//       body: Container(
+//         width: MediaQuery.of(context).size.width,
+//         height: MediaQuery.of(context).size.height,
+//         child: Card(
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             children: [
+//               Expanded(
+//                 child: news.image == null
+//                     ? Image(
+//                         fit: BoxFit.fitWidth,
+//                         image: AssetImage(
+//                           "assets/enlightnment-app-logo.jpeg",
+//                         ),
+//                         width: MediaQuery.of(context).size.width,
+//                         height: 80,
+//                       )
+//                     : Image(
+//                         fit: BoxFit.fitWidth,
+//                         image: NetworkImage(
+//                           news.image.toString(),
+//                         ),
+//                         width: MediaQuery.of(context).size.width,
+//                         height: 80,
+//                       ),
+//               ),
+//               Container(
+//                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+//                 child: Text(
+//                   news.title,
+//                   style: const TextStyle(
+//                     fontSize: 25,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//               Container(
+//                 padding: const EdgeInsets.symmetric(
+//                   horizontal: 10.0,
+//                   // vertical: 10.0,
+//                 ),
+//                 child: Text(
+//                   // "1h",
+//                   DateTime.parse(news.published_at.toString()).hour.toString() +
+//                       "h",
+//                   style: const TextStyle(
+//                     fontSize: 15,
+//                     color: Colors.grey,
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(height: 20),
+//               Expanded(
+//                 child: Container(
+//                   padding: const EdgeInsets.symmetric(
+//                     horizontal: 10.0,
+//                     vertical: 10.0,
+//                   ),
+//                   // child: const Text(
+//                   //   "Imran Ahmed Khan Niazi HI PP is the 22nd and current prime minister of Pakistan. He is also the chairman of the Pakistan Tehreek-e-Insaf. Before entering politics, Khan was an international cricketer and captain of the Pakistan national cricket team, which he led to victory in the 1992 Cricket World Cup.",
+//                   //   style: const TextStyle(
+//                   //     fontSize: 15,
+//                   //   ),
+//                   child: Text(
+//                     news.description.toString(),
+//                     style: const TextStyle(
+//                       fontSize: 15,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
