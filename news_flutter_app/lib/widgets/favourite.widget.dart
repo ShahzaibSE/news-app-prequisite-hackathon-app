@@ -14,7 +14,9 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
-  getFavourites() {}
+  getFavourites() async {}
+  //
+  deleteFavourite() async {}
   //
   Widget buildFavourite(NewsModel headline, int index) {
     return Card(

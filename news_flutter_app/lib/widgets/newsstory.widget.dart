@@ -44,8 +44,6 @@ class _NewsStoryState extends State<NewsStory> {
     }
   }
 
-  deleteFavourite() async {}
-
   //
   @override
   Widget build(BuildContext context) {
