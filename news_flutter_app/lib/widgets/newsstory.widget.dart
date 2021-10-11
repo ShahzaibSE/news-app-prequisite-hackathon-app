@@ -1,4 +1,7 @@
 import "package:flutter/material.dart";
+import "package:firebase_auth/firebase_auth.dart";
+import "package:http/http.dart" as http;
+import 'dart:convert';
 //
 import "./news.model.dart";
 
@@ -14,6 +17,36 @@ class NewsStory extends StatefulWidget {
 }
 
 class _NewsStoryState extends State<NewsStory> {
+  bool? isFavourite;
+  //
+  addToFavourite(NewsModel news) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      final User user = auth.currentUser as User;
+      final uid = user.uid;
+      Uri uri = Uri.http('localhost:3000', '/favourite/add');
+      http.Response response = await http.post(uri, body: {
+        'uid': uid,
+        'title': news.title,
+        'description': news.description,
+        'author': news.author,
+        'category': news.category,
+        'source': news.source,
+        'imageUrl': news.image,
+        'video': news.video,
+        'country': news.country,
+        'url': news.url
+      });
+      var jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  deleteFavourite() async {}
+
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
