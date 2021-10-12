@@ -85,10 +85,15 @@ class _FavouriteState extends State<Favourite> {
               title: Container(
                 // padding: const EdgeInsets.only(top: 10),
                 child: Text(
-                  headline.title.characters.take(50).toString() + "...",
+                  headline.title.characters.take(30).toString() + "...",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 15),
                 ),
+              ),
+              trailing: const Tooltip(
+                message: "drag to left",
+                showDuration: Duration(seconds: 3),
+                child: Icon(Icons.drag_indicator),
               ),
             ),
             secondaryActions: <Widget>[
