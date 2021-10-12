@@ -44,7 +44,7 @@ export const addFavourite = async (req: Request, res: Response) => {
     source,
     country,
   } = req.body;
-  let existingFavourite = await favourite_model.findOne({ uid });
+  let existingFavourite = await favourite_model.findOne({ title });
   if (existingFavourite) {
     res.status(403).send({
       status: false,

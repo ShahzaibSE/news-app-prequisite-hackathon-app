@@ -34,7 +34,7 @@ const getAllFavourites = async (req, res) => {
 exports.getAllFavourites = getAllFavourites;
 const addFavourite = async (req, res) => {
     const { uid, title, description, image, video, category, author, url, source, country, } = req.body;
-    let existingFavourite = await favourite_model.findOne({ uid });
+    let existingFavourite = await favourite_model.findOne({ title });
     if (existingFavourite) {
         res.status(403).send({
             status: false,

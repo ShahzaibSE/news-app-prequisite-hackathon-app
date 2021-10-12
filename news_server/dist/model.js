@@ -36,15 +36,14 @@ exports.Favourite = new mongoose_1.Schema({
         required: true
     },
     title: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
         type: String,
-        // required: true
     },
     image: {
         type: String,
-        // required: true
     },
     video: {
         type: String
@@ -57,7 +56,6 @@ exports.Favourite = new mongoose_1.Schema({
     },
     category: {
         type: String,
-        // required:true
     },
     author: {
         type: String
