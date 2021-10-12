@@ -37,13 +37,14 @@ export const Favourite = new Schema({
         required: true
     },
     title: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
-        type: String
+        type: String,
     },
     image:{
-        type: String
+        type: String,
     },
     video:{
         type: String
@@ -55,7 +56,7 @@ export const Favourite = new Schema({
         type: String
     },
     category:{
-        type: String
+        type: String,
     },
     author:{
         type: String
