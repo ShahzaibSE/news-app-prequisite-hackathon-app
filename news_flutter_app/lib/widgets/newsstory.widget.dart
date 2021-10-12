@@ -51,8 +51,12 @@ class _NewsStoryState extends State<NewsStory> {
       //
       if (jsonResponse['status'] == false) {
         const ifAlreadyFavourite = AlertDialog(
-          title: Text("Favourite already exists."),
-        );
+            title: Text("Favourite already exists."),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ));
         showDialog(context: context, builder: (context) => ifAlreadyFavourite);
       }
       //
