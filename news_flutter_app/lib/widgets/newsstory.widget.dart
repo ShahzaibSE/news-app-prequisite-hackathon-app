@@ -54,6 +54,10 @@ class _NewsStoryState extends State<NewsStory> {
         newFavourite['time'] = news.time.toString();
       }
 
+      if (news.published_at != null) {
+        newFavourite['published_at'] = news.published_at.toString();
+      }
+
       var response = await http.post(uri, body: newFavourite);
       var jsonResponse = jsonDecode(response.body);
       //
@@ -163,23 +167,23 @@ class _NewsStoryState extends State<NewsStory> {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  // vertical: 10.0,
-                ),
-                child: Text(
-                  // "1h",
-                  DateTime.parse(widget.news.published_at.toString())
-                          .hour
-                          .toString() +
-                      "h",
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 10.0,
+              //     // vertical: 10.0,
+              //   ),
+              //   child: Text(
+              //     // "1h",
+              //     DateTime.parse(widget.news.published_at.toString())
+              //             .hour
+              //             .toString() +
+              //         "h",
+              //     style: const TextStyle(
+              //       fontSize: 15,
+              //       color: Colors.grey,
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 20),
               Expanded(
                 child: Container(

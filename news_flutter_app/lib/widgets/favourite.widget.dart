@@ -89,18 +89,6 @@ class _FavouriteState extends State<Favourite> {
                       fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ),
-              subtitle: Container(
-                // padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  DateTime.parse(headline.published_at.toString())
-                          .hour
-                          .toString() +
-                      "h",
-                  style: const TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-              ),
             ),
             secondaryActions: <Widget>[
               IconSlideAction(
@@ -142,7 +130,6 @@ class _FavouriteState extends State<Favourite> {
                       snapshot.data[index]['title'],
                       image: snapshot.data[index]['image'],
                       description: snapshot.data[index]['description'],
-                      published_at: snapshot.data[index]['published_at'],
                     ),
                     index,
                   ),
