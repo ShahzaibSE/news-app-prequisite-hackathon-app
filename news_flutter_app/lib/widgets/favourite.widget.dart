@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:awesome_loader/awesome_loader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "./newscard.widget.dart";
@@ -54,44 +55,60 @@ class _FavouriteState extends State<Favourite> {
             ),
           );
         },
-        child: ListTile(
-          // minLeadingWidth: 60,
-          contentPadding: const EdgeInsets.all(10),
-          leading: FittedBox(
-            child: headline.image == null
-                ? Image(
-                    fit: BoxFit.fill,
-                    image: AssetImage(
-                      "assets/enlightnment-app-logo.jpeg",
-                    ),
-                    width: MediaQuery.of(context).size.width / 4,
-                    height: 80,
-                  )
-                : Image(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(
-                      headline.image.toString(),
-                    ),
-                    width: MediaQuery.of(context).size.width / 4,
-                    height: 80,
+        child: Container(
+          child: Slidable(
+            actionPane: const SlidableBehindActionPane(),
+            actionExtentRatio: 0.25,
+            child: ListTile(
+              // minLeadingWidth: 60,
+              contentPadding: const EdgeInsets.all(10),
+              leading: FittedBox(
+                child: headline.image == null
+                    ? Image(
+                        fit: BoxFit.fill,
+                        image: AssetImage(
+                          "assets/enlightnment-app-logo.jpeg",
+                        ),
+                        width: MediaQuery.of(context).size.width / 4,
+                        height: 80,
+                      )
+                    : Image(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(
+                          headline.image.toString(),
+                        ),
+                        width: MediaQuery.of(context).size.width / 4,
+                        height: 80,
+                      ),
+              ),
+              title: Container(
+                // padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  headline.title.characters.take(50).toString() + "...",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ),
+              subtitle: Container(
+                // padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  DateTime.parse(headline.published_at.toString())
+                          .hour
+                          .toString() +
+                      "h",
+                  style: const TextStyle(
+                    fontSize: 15,
                   ),
-          ),
-          title: Container(
-            // padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              headline.title.characters.take(50).toString() + "...",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          ),
-          subtitle: Container(
-            // padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              DateTime.parse(headline.published_at.toString()).hour.toString() +
-                  "h",
-              style: const TextStyle(
-                fontSize: 15,
+                ),
               ),
             ),
+            secondaryActions: <Widget>[
+              IconSlideAction(
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: () {},
+              ),
+            ],
           ),
         ),
       ),

@@ -96,13 +96,11 @@ class _SignUpState extends State<SignUp> {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
         const weakPasswordDialog = AlertDialog(
           title: Text("The password provided is too weak."),
         );
         showDialog(context: context, builder: (context) => weakPasswordDialog);
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
         const userExistDialog = AlertDialog(
           title: Text("The account already exists for that email."),
         );

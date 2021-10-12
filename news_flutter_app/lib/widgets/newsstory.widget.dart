@@ -17,27 +17,45 @@ class NewsStory extends StatefulWidget {
 }
 
 class _NewsStoryState extends State<NewsStory> {
-  bool? isFavourite;
+  bool isFavourite = false;
   //
   addToFavourite(NewsModel news) async {
     try {
+      print("Added to favourite - method");
+      print('News Story');
+      print(news.title);
       FirebaseAuth auth = FirebaseAuth.instance;
       final User user = auth.currentUser as User;
       final uid = user.uid;
-      Uri uri = Uri.http('localhost:3000', '/favourite/add');
-      http.Response response = await http.post(uri, body: {
+      var uri = Uri.http('localhost:3000', '/favourite/add');
+      var newFavourite = {
         'uid': uid,
         'title': news.title,
         'description': news.description,
-        'author': news.author,
-        'category': news.category,
-        'source': news.source,
+        // 'author': news.author,
+        // 'category': news.category,
+        // 'source': news.source,
         'imageUrl': news.image,
-        'video': news.video,
-        'country': news.country,
-        'url': news.url
-      });
+        // 'video': news.video,
+        // 'country': news.country,
+        // 'url': news.url,
+        // 'time': news.time,
+        'published_at': news.published_at,
+      };
+      print('New Favourite');
+      print(newFavourite);
+      var response = await http.post(uri, body: newFavourite);
       var jsonResponse = jsonDecode(response.body);
+      print("API - Adding to favourite");
+      print(jsonResponse);
+      //
+      if (jsonResponse['status'] == false) {
+        const ifAlreadyFavourite = AlertDialog(
+          title: Text("Favourite already exists."),
+        );
+        showDialog(context: context, builder: (context) => ifAlreadyFavourite);
+      }
+      //
       return jsonResponse;
     } catch (e) {
       throw e;
@@ -65,12 +83,17 @@ class _NewsStoryState extends State<NewsStory> {
               ),
               onTap: () {
                 print('Added to favourites');
+                // setState(() {
+                addToFavourite(widget.news);
+                // });
               },
-              child: Icon(
-                Icons.favorite_rounded,
-                size: 26.0,
-                key: Key(
-                  widget.index.toString(),
+              child: GestureDetector(
+                child: Icon(
+                  Icons.favorite_rounded,
+                  size: 26.0,
+                  key: Key(
+                    widget.index.toString(),
+                  ),
                 ),
               ),
             ),
