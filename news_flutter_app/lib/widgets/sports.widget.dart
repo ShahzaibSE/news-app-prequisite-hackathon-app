@@ -41,6 +41,7 @@ class _SportsWidgetState extends State<SportsWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                  isFavourite: true,
                   news: NewsModel(
                     headline.title,
                     image: headline.image,

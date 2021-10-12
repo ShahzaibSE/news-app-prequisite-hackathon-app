@@ -67,6 +67,7 @@ class _SearchWidgetState extends State<SearchWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                isFavourite: true,
                 index: index,
                 news: NewsModel(
                   searchResult.title,

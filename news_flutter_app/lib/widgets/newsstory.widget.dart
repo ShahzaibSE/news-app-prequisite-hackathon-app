@@ -6,11 +6,16 @@ import 'dart:convert';
 import "./news.model.dart";
 
 class NewsStory extends StatefulWidget {
-  const NewsStory({Key? key, required this.news, required this.index})
+  const NewsStory(
+      {Key? key,
+      required this.news,
+      required this.index,
+      required this.isFavourite})
       : super(key: key);
 
   final NewsModel news;
   final int index;
+  final bool isFavourite;
 
   @override
   _NewsStoryState createState() => _NewsStoryState();
@@ -105,30 +110,32 @@ class _NewsStoryState extends State<NewsStory> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              key: Key(
-                widget.index.toString(),
-              ),
-              onTap: () {
-                // setState(() {
-                addToFavourite(widget.news);
-                // });
-              },
-              child: GestureDetector(
-                child: Icon(
-                  Icons.favorite_rounded,
-                  size: 26.0,
-                  key: Key(
-                    widget.index.toString(),
+        actions: widget.isFavourite == true
+            ? <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    key: Key(
+                      widget.index.toString(),
+                    ),
+                    onTap: () {
+                      // setState(() {
+                      addToFavourite(widget.news);
+                      // });
+                    },
+                    child: GestureDetector(
+                      child: Icon(
+                        Icons.favorite_rounded,
+                        size: 26.0,
+                        key: Key(
+                          widget.index.toString(),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        ],
+              ]
+            : [],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

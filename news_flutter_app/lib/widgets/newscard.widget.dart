@@ -20,6 +20,7 @@ class NewsCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                isFavourite: true,
                 index: index,
                 news: NewsModel(
                   news.title,

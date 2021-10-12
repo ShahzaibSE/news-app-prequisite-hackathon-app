@@ -74,6 +74,7 @@ class _SearchNewsState extends State<SearchNews> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                isFavourite: true,
                 index: index,
                 news: NewsModel(
                   searchResult.title,

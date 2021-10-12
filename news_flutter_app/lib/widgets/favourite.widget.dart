@@ -44,6 +44,7 @@ class _FavouriteState extends State<Favourite> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                isFavourite: false,
                 index: index,
                 news: NewsModel(
                   headline.title,

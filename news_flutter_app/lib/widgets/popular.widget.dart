@@ -41,6 +41,7 @@ class _PopularWidgetState extends State<PopularWidget> {
             context,
             MaterialPageRoute(
               builder: (context) => NewsStory(
+                isFavourite: true,
                 index: index,
                 news: NewsModel(
                   headline.title,
