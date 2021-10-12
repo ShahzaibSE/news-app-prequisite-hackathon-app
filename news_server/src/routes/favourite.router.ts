@@ -9,7 +9,7 @@ const favourite_router: Router = Router();
 
 favourite_router.get('/list', getAllFavourites)
 favourite_router.post("/add", addFavourite);
-favourite_router.delete("/delete", deleteFavourites);
+favourite_router.delete("/delete/:_id", deleteFavourites);
 // user_router.post("/test", (req,res)=>{
 //     res.status(200).send("Test successful");
 // })

@@ -6,7 +6,7 @@ const favourites_controller_1 = require("./../controllers/favourites.controller"
 const favourite_router = express_1.Router();
 favourite_router.get('/list', favourites_controller_1.getAllFavourites);
 favourite_router.post("/add", favourites_controller_1.addFavourite);
-favourite_router.delete("/delete", favourites_controller_1.deleteFavourites);
+favourite_router.delete("/delete/:_id", favourites_controller_1.deleteFavourites);
 // user_router.post("/test", (req,res)=>{
 //     res.status(200).send("Test successful");
 // })
