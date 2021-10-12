@@ -17,7 +17,6 @@ class NewsStory extends StatefulWidget {
 }
 
 class _NewsStoryState extends State<NewsStory> {
-  bool isFavourite = false;
   //
   addToFavourite(NewsModel news) async {
     try {
@@ -58,22 +57,33 @@ class _NewsStoryState extends State<NewsStory> {
         newFavourite['time'] = news.time.toString();
       }
 
-      print('New Favourite');
-      print(newFavourite);
       var response = await http.post(uri, body: newFavourite);
       var jsonResponse = jsonDecode(response.body);
-      print("API - Adding to favourite");
-      print(jsonResponse);
       //
       if (jsonResponse['status'] == false) {
         const ifAlreadyFavourite = AlertDialog(
-            title: Text("Favourite already exists."),
+            title: Text(
+              "Favourite already exists.",
+              textAlign: TextAlign.center,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10.0),
               ),
             ));
         showDialog(context: context, builder: (context) => ifAlreadyFavourite);
+      } else {
+        const newFavouriteAdded = AlertDialog(
+            title: Text(
+              "Favourite added!",
+              textAlign: TextAlign.center,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ));
+        showDialog(context: context, builder: (context) => newFavouriteAdded);
       }
       //
       return jsonResponse;
