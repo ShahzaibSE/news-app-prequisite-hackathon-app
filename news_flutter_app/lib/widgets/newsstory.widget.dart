@@ -109,7 +109,6 @@ class _NewsStoryState extends State<NewsStory> {
                 widget.index.toString(),
               ),
               onTap: () {
-                print('Added to favourites');
                 // setState(() {
                 addToFavourite(widget.news);
                 // });
