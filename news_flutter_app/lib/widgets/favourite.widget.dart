@@ -125,9 +125,11 @@ class _FavouriteState extends State<Favourite> {
                 color: Colors.red,
                 icon: Icons.delete,
                 onTap: () {
-                  deleteFavourite(
-                    NewsModel.favourites[index]["_id"],
-                  );
+                  setState(() {
+                    deleteFavourite(
+                      NewsModel.favourites[index]["_id"],
+                    );
+                  });
                 },
               ),
             ],
