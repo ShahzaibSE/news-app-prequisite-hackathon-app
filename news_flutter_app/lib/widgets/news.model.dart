@@ -1,4 +1,6 @@
 class NewsModel {
+  static List favourites = [];
+  //
   String title;
   String? description;
   String? content;

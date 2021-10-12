@@ -27,6 +27,9 @@ class _FavouriteState extends State<Favourite> {
       );
       var response = await http.get(uri);
       var jsonResponse = jsonDecode(response.body);
+      // setState(() {
+      NewsModel.favourites = jsonResponse['data'];
+      // });
       return jsonResponse['data'];
     } catch (e) {
       throw e;
@@ -34,9 +37,30 @@ class _FavouriteState extends State<Favourite> {
   }
 
   //
-  deleteFavourite() async {}
+  deleteFavourite(String _id) async {
+    try {
+      print("Favourite ID: $_id");
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final User user = auth.currentUser as User;
+      final uid = user.uid;
+      var uri = Uri.http(
+        "localhost:3000",
+        "/favourite/delete/$_id",
+      );
+      var response = await http.delete(uri);
+      var jsonResponse = jsonDecode(response.body);
+      // setState(() {
+      // });
+      return jsonResponse;
+    } catch (e) {
+      throw e;
+    } finally {
+      getFavourites();
+    }
+  }
+
   //
-  Widget buildFavourite(NewsModel headline, int index) {
+  Widget buildFavourite(NewsModel favourite, int index) {
     return Card(
       child: GestureDetector(
         onTap: () {
@@ -47,10 +71,10 @@ class _FavouriteState extends State<Favourite> {
                 isFavourite: false,
                 index: index,
                 news: NewsModel(
-                  headline.title,
-                  image: headline.image,
-                  description: headline.description,
-                  published_at: headline.published_at,
+                  favourite.title,
+                  image: favourite.image,
+                  description: favourite.description,
+                  published_at: favourite.published_at,
                 ),
               ),
             ),
@@ -64,7 +88,7 @@ class _FavouriteState extends State<Favourite> {
               // minLeadingWidth: 60,
               contentPadding: const EdgeInsets.all(10),
               leading: FittedBox(
-                child: headline.image == null
+                child: favourite.image == null
                     ? Image(
                         fit: BoxFit.fill,
                         image: AssetImage(
@@ -76,7 +100,7 @@ class _FavouriteState extends State<Favourite> {
                     : Image(
                         fit: BoxFit.fill,
                         image: NetworkImage(
-                          headline.image.toString(),
+                          favourite.image.toString(),
                         ),
                         width: MediaQuery.of(context).size.width / 4,
                         height: 80,
@@ -85,7 +109,7 @@ class _FavouriteState extends State<Favourite> {
               title: Container(
                 // padding: const EdgeInsets.only(top: 10),
                 child: Text(
-                  headline.title.characters.take(30).toString() + "...",
+                  favourite.title.characters.take(30).toString() + "...",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 15),
                 ),
@@ -100,7 +124,11 @@ class _FavouriteState extends State<Favourite> {
               IconSlideAction(
                 color: Colors.red,
                 icon: Icons.delete,
-                onTap: () {},
+                onTap: () {
+                  deleteFavourite(
+                    NewsModel.favourites[index]["_id"],
+                  );
+                },
               ),
             ],
           ),
@@ -133,9 +161,9 @@ class _FavouriteState extends State<Favourite> {
                   snapshot.data.length,
                   (index) => buildFavourite(
                     NewsModel(
-                      snapshot.data[index]['title'],
-                      image: snapshot.data[index]['image'],
-                      description: snapshot.data[index]['description'],
+                      NewsModel.favourites[index]['title'],
+                      image: NewsModel.favourites[index]['image'],
+                      description: NewsModel.favourites[index]['description'],
                     ),
                     index,
                   ),
