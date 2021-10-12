@@ -28,20 +28,36 @@ class _NewsStoryState extends State<NewsStory> {
       final User user = auth.currentUser as User;
       final uid = user.uid;
       var uri = Uri.http('localhost:3000', '/favourite/add');
-      var newFavourite = {
-        'uid': uid,
-        'title': news.title,
-        'description': news.description,
-        // 'author': news.author,
-        // 'category': news.category,
-        // 'source': news.source,
-        'imageUrl': news.image,
-        // 'video': news.video,
-        // 'country': news.country,
-        // 'url': news.url,
-        // 'time': news.time,
-        'published_at': news.published_at,
-      };
+      var newFavourite = {'uid': uid, 'title': news.title};
+      // Null checking on new favourite keys.
+      if (news.image != null) {
+        newFavourite['imageUrl'] = news.image.toString();
+      }
+      if (news.description != null) {
+        newFavourite['description'] = news.description.toString();
+      }
+      if (news.category != null) {
+        newFavourite['category'] = news.category.toString();
+      }
+      if (news.author != null) {
+        newFavourite['author'] = news.author.toString();
+      }
+      if (news.video != null) {
+        newFavourite['video'] = news.video.toString();
+      }
+      if (news.country != null) {
+        newFavourite['country'] = news.country.toString();
+      }
+      if (news.url != null) {
+        newFavourite['url'] = news.url.toString();
+      }
+      if (news.source != null) {
+        newFavourite['source'] = news.source.toString();
+      }
+      if (news.time != null) {
+        newFavourite['time'] = news.time.toString();
+      }
+
       print('New Favourite');
       print(newFavourite);
       var response = await http.post(uri, body: newFavourite);
