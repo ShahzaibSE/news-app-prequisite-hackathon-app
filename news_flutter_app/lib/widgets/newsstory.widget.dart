@@ -20,9 +20,6 @@ class _NewsStoryState extends State<NewsStory> {
   //
   addToFavourite(NewsModel news) async {
     try {
-      print("Added to favourite - method");
-      print('News Story');
-      print(news.title);
       FirebaseAuth auth = FirebaseAuth.instance;
       final User user = auth.currentUser as User;
       final uid = user.uid;
