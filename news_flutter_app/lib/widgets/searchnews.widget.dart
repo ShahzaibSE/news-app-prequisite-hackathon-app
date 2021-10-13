@@ -173,7 +173,8 @@ class _SearchNewsState extends State<SearchNews> {
                               ),
                               hintStyle: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                               border: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -246,6 +247,10 @@ class _SearchNewsState extends State<SearchNews> {
                           // Navigator.pop(context);
                           clearFilters();
                         },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
+                        ),
                       ),
                     ),
                   ],
