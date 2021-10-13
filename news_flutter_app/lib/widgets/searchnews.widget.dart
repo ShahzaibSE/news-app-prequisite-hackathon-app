@@ -185,7 +185,7 @@ class _SearchNewsState extends State<SearchNews> {
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          child: DropdownButton<String>(
+                          child: DropdownButtonFormField<String>(
                             isExpanded: true,
                             value: dropdownValue,
                             icon: const Icon(
@@ -194,15 +194,15 @@ class _SearchNewsState extends State<SearchNews> {
                             iconSize: 24,
                             elevation: 16,
                             style: const TextStyle(color: Colors.deepPurple),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.deepPurpleAccent,
-                            ),
+                            // underline: Container(
+                            //   height: 2,
+                            //   color: Colors.deepPurpleAccent,
+                            // ),
                             onChanged: (String? newValue) {
                               setState(() {
                                 dropdownValue = newValue!;
                                 searchNews();
-                                Navigator.pop(context);
+                                // Navigator.pop(context);
                               });
                             },
                             items: <String>[
