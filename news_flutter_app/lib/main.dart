@@ -22,7 +22,7 @@ class Splash extends StatelessWidget {
       loaderColor: Colors.white,
       photoSize: 100.0,
       title: const Text(
-        'Welcome to the  Enlightenment',
+        'Welcome to Enlightenment',
         style: TextStyle(
           fontFamily: "Royale",
           fontSize: 50,
