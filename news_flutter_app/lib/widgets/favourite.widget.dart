@@ -55,7 +55,7 @@ class _FavouriteState extends State<Favourite> {
     } catch (e) {
       throw e;
     } finally {
-      getFavourites();
+      // getFavourites();
     }
   }
 
