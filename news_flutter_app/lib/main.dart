@@ -18,7 +18,7 @@ class Splash extends StatelessWidget {
       //   'assets/welcome-app.png',
       //   colorBlendMode: BlendMode.clear,
       // ),
-      navigateAfterSeconds: const UserAuth(),
+      navigateAfterSeconds: const MyHomePage(title: 'Enlightenment'),
       loaderColor: Colors.white,
       photoSize: 100.0,
       title: const Text(

@@ -1,9 +1,12 @@
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:http/http.dart" as http;
+import 'package:news_flutter_app/widgets/homenews.widget.dart';
 import 'dart:convert';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 //
 import "./news.model.dart";
+import "./user-auth-container.widget.dart";
 
 class NewsStory extends StatefulWidget {
   const NewsStory(
@@ -26,73 +29,95 @@ class _NewsStoryState extends State<NewsStory> {
   addToFavourite(NewsModel news) async {
     try {
       FirebaseAuth auth = FirebaseAuth.instance;
-      final User user = auth.currentUser as User;
-      final uid = user.uid;
-      var uri = Uri.http('localhost:3000', '/favourite/add');
-      var newFavourite = {'uid': uid, 'title': news.title};
+      // final User user = auth.currentUser as User;
+      // final uid = user.uid;
+      // var uri = Uri.http('localhost:3000', '/favourite/add');
+      // var newFavourite = {'uid': uid, 'title': news.title};
       // Null checking on new favourite keys.
-      if (news.image != null) {
-        newFavourite['imageUrl'] = news.image.toString();
-      }
-      if (news.description != null) {
-        newFavourite['description'] = news.description.toString();
-      }
-      if (news.category != null) {
-        newFavourite['category'] = news.category.toString();
-      }
-      if (news.author != null) {
-        newFavourite['author'] = news.author.toString();
-      }
-      if (news.video != null) {
-        newFavourite['video'] = news.video.toString();
-      }
-      if (news.country != null) {
-        newFavourite['country'] = news.country.toString();
-      }
-      if (news.url != null) {
-        newFavourite['url'] = news.url.toString();
-      }
-      if (news.source != null) {
-        newFavourite['source'] = news.source.toString();
-      }
-      if (news.time != null) {
-        newFavourite['time'] = news.time.toString();
-      }
-
-      if (news.published_at != null) {
-        newFavourite['published_at'] = news.published_at.toString();
-      }
-
-      var response = await http.post(uri, body: newFavourite);
-      var jsonResponse = jsonDecode(response.body);
-      //
-      if (jsonResponse['status'] == false) {
-        const ifAlreadyFavourite = AlertDialog(
-            title: Text(
-              "Favourite already exists.",
-              textAlign: TextAlign.center,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-            ));
-        showDialog(context: context, builder: (context) => ifAlreadyFavourite);
+      if (auth.currentUser == null) {
+        // Open up Modal Bottom Sheet.
+        showMaterialModalBottomSheet(
+          context: context,
+          builder: (context) => const UserAuth(),
+        );
+        // Navigator.of(context).push(
+        //   PageRouteBuilder(
+        //     opaque: false, // for modal transparency
+        //     pageBuilder: (_, __, ___) => const Material(
+        //       // color: Colors.black38,
+        //       child: UserAuth(),
+        //     ),
+        //   ),
+        // );
       } else {
-        const newFavouriteAdded = AlertDialog(
-            title: Text(
-              "Favourite added!",
-              textAlign: TextAlign.center,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
+        final User user = auth.currentUser as User;
+        final uid = user.uid;
+        var uri = Uri.http('localhost:3000', '/favourite/add');
+        var newFavourite = {'uid': uid, 'title': news.title};
+        if (news.image != null) {
+          newFavourite['imageUrl'] = news.image.toString();
+        }
+        if (news.description != null) {
+          newFavourite['description'] = news.description.toString();
+        }
+        if (news.category != null) {
+          newFavourite['category'] = news.category.toString();
+        }
+        if (news.author != null) {
+          newFavourite['author'] = news.author.toString();
+        }
+        if (news.video != null) {
+          newFavourite['video'] = news.video.toString();
+        }
+        if (news.country != null) {
+          newFavourite['country'] = news.country.toString();
+        }
+        if (news.url != null) {
+          newFavourite['url'] = news.url.toString();
+        }
+        if (news.source != null) {
+          newFavourite['source'] = news.source.toString();
+        }
+        if (news.time != null) {
+          newFavourite['time'] = news.time.toString();
+        }
+
+        if (news.published_at != null) {
+          newFavourite['published_at'] = news.published_at.toString();
+        }
+
+        var response = await http.post(uri, body: newFavourite);
+        var jsonResponse = jsonDecode(response.body);
+        //
+        if (jsonResponse['status'] == false) {
+          const ifAlreadyFavourite = AlertDialog(
+              title: Text(
+                "Favourite already exists.",
+                textAlign: TextAlign.center,
               ),
-            ));
-        showDialog(context: context, builder: (context) => newFavouriteAdded);
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+              ));
+          showDialog(
+              context: context, builder: (context) => ifAlreadyFavourite);
+        } else {
+          const newFavouriteAdded = AlertDialog(
+              title: Text(
+                "Favourite added!",
+                textAlign: TextAlign.center,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+              ));
+          showDialog(context: context, builder: (context) => newFavouriteAdded);
+        }
+        //
+        return jsonResponse;
       }
-      //
-      return jsonResponse;
     } catch (e) {
       throw e;
     }

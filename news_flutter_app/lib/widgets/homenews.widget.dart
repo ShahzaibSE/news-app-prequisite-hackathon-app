@@ -77,7 +77,8 @@ class _HomeNewsState extends State<HomeNews> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => const UserAuth(),
+        // builder: (context) => const UserAuth(),
+        builder: (context) => const HomeNews(),
       ),
       (Route<dynamic> route) => false,
     );
@@ -117,77 +118,142 @@ class _HomeNewsState extends State<HomeNews> {
   }
 
   Widget buildDrawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          const DrawerHeader(
-            child: Text(
-              'Enlightenment',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage('./assets/drawer-cover.jpeg'),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.input),
-            title: const Text('Welcome'),
-            onTap: () => {
-              Navigator.pop(context),
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.verified_user),
-            title: const Text('Profile'),
-            // onTap: () => {Navigator.of(context).pop()},
-            onTap: () => {
-              // getProfile();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ViewProfile(),
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      if (auth.currentUser == null) {
+        return Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              const DrawerHeader(
+                child: Text(
+                  'Enlightenment',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage('./assets/drawer-cover.jpeg'),
+                  ),
                 ),
               ),
-            },
+              ListTile(
+                leading: const Icon(Icons.input),
+                title: const Text('Welcome'),
+                onTap: () => {
+                  Navigator.pop(context),
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.verified_user),
+                title: const Text('Profile'),
+                // onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  // getProfile();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ViewProfile(),
+                    ),
+                  ),
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.favorite_rounded),
+                title: const Text('Favourite'),
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Favourite(),
+                    ),
+                  ),
+                },
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(Icons.favorite_rounded),
-            title: const Text('Favourite'),
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Favourite(),
+        );
+      } else {
+        return Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              const DrawerHeader(
+                child: Text(
+                  'Enlightenment',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage('./assets/drawer-cover.jpeg'),
+                  ),
                 ),
               ),
-            },
+              ListTile(
+                leading: const Icon(Icons.input),
+                title: const Text('Welcome'),
+                onTap: () => {
+                  Navigator.pop(context),
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.verified_user),
+                title: const Text('Profile'),
+                // onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  // getProfile();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ViewProfile(),
+                    ),
+                  ),
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.favorite_rounded),
+                title: const Text('Favourite'),
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Favourite(),
+                    ),
+                  ),
+                },
+              ),
+              const Divider(
+                key: Key('divider-profile'),
+                thickness: 1.0,
+              ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Logout'),
+                onTap: logout,
+              ),
+              // ListTile(
+              //   leading: const Icon(Icons.category),
+              //   title: const Text('Category'),
+              //   onTap: () => {},
+              // ),
+            ],
           ),
-          const Divider(
-            key: Key('divider-profile'),
-            thickness: 1.0,
-          ),
-          ListTile(
-            leading: const Icon(Icons.exit_to_app),
-            title: const Text('Logout'),
-            onTap: logout,
-          ),
-          // ListTile(
-          //   leading: const Icon(Icons.category),
-          //   title: const Text('Category'),
-          //   onTap: () => {},
-          // ),
-        ],
-      ),
-    );
+        );
+      }
+    } catch (e) {
+      throw e;
+    }
   }
 
   //
