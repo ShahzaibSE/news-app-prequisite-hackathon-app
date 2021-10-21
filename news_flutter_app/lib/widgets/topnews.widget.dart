@@ -112,6 +112,10 @@ class _TopNewsState extends State<TopNews> {
                       ),
                     ],
                     onPressed: (int index) {
+                      print(_selections[index]);
+                      setState(() {
+                        _selections[index] = !_selections[index];
+                      });
                       // setState(() {
                       //   isSelected[index] = !isSelected[index];
                       // });
