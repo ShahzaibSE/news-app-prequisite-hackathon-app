@@ -155,19 +155,23 @@ class _FavouriteState extends State<Favourite> {
         future: getFavourites(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  snapshot.data.length,
-                  (index) => buildFavourite(
-                    NewsModel(
-                      NewsModel.favourites[index]['title'],
-                      image: NewsModel.favourites[index]['image'],
-                      description: NewsModel.favourites[index]['description'],
+            return LimitedBox(
+              maxWidth: MediaQuery.of(context).size.width,
+              maxHeight: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    snapshot.data.length,
+                    (index) => buildFavourite(
+                      NewsModel(
+                        NewsModel.favourites[index]['title'],
+                        image: NewsModel.favourites[index]['image'],
+                        description: NewsModel.favourites[index]['description'],
+                      ),
+                      index,
                     ),
-                    index,
                   ),
                 ),
               ),

@@ -59,19 +59,23 @@ class _TopNewsState extends State<TopNews> {
       future: getTopNews(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(
-                snapshot.data.length,
-                (index) => NewsCard(
-                  index: index,
-                  news: NewsModel(
-                    snapshot.data[index]['title'],
-                    image: snapshot.data[index]['image'],
-                    description: snapshot.data[index]['description'],
-                    published_at: snapshot.data[index]['published_at'],
+          return LimitedBox(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  snapshot.data.length,
+                  (index) => NewsCard(
+                    index: index,
+                    news: NewsModel(
+                      snapshot.data[index]['title'],
+                      image: snapshot.data[index]['image'],
+                      description: snapshot.data[index]['description'],
+                      published_at: snapshot.data[index]['published_at'],
+                    ),
                   ),
                 ),
               ),
@@ -79,7 +83,7 @@ class _TopNewsState extends State<TopNews> {
           );
         } else {
           return Container(
-            child: AwesomeLoader(
+            child: const AwesomeLoader(
               loaderType: AwesomeLoader.AwesomeLoader3,
               color: Colors.white,
             ),
