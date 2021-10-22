@@ -23,7 +23,7 @@ class TopNews extends StatefulWidget {
 }
 
 class _TopNewsState extends State<TopNews> {
-  final List<bool> _selections = List.generate(categories.length, (_) => false);
+  List<bool> _selections = List.generate(categories.length, (_) => false);
   getTopNews({dynamic limit}) async {
     try {
       var uri = Uri.http(
@@ -74,6 +74,7 @@ class _TopNewsState extends State<TopNews> {
                     splashColor: Colors.greenAccent,
                     highlightColor: Colors.blueGrey,
                     borderRadius: BorderRadius.circular(20),
+                    borderColor: Colors.red,
                     children: <Widget>[
                       Tooltip(
                         key: Key('general'),
@@ -112,10 +113,17 @@ class _TopNewsState extends State<TopNews> {
                       ),
                     ],
                     onPressed: (int index) {
-                      print(_selections[index]);
                       setState(() {
-                        _selections[index] = !_selections[index];
+                        for (var i = 0; i < _selections.length; i++) {
+                          if (i == index) {
+                            _selections[index] = !_selections[i];
+                          } else {
+                            _selections[i] = false;
+                          }
+                        }
+                        // _selections[index] = !_selections[index];
                       });
+                      print(_selections[index]);
                       // setState(() {
                       //   isSelected[index] = !isSelected[index];
                       // });

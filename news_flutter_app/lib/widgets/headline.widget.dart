@@ -168,9 +168,16 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                       ),
                     ],
                     onPressed: (int index) {
-                      // setState(() {
-                      //   isSelected[index] = !isSelected[index];
-                      // });
+                      setState(() {
+                        for (var i = 0; i < _selections.length; i++) {
+                          if (i == index) {
+                            _selections[index] = !_selections[i];
+                          } else {
+                            _selections[i] = false;
+                          }
+                        }
+                        // _selections[index] = !_selections[index];
+                      });
                     },
                     isSelected: _selections,
                   ),
