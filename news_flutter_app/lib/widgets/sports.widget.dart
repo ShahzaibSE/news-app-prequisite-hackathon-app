@@ -108,67 +108,67 @@ class _SportsWidgetState extends State<SportsWidget> {
             physics: const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: ToggleButtons(
-                    selectedColor: Colors.white,
-                    fillColor: Colors.redAccent,
-                    splashColor: Colors.greenAccent,
-                    highlightColor: Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(20),
-                    children: <Widget>[
-                      Tooltip(
-                        key: Key('general'),
-                        message: "general",
-                        child: Icon(Icons.all_out),
-                      ),
-                      Tooltip(
-                        key: Key('sports'),
-                        message: "sports",
-                        child: Icon(Icons.sports),
-                      ),
-                      Tooltip(
-                        key: Key('entertainment'),
-                        message: "entertainment",
-                        child: Icon(Icons.movie),
-                      ),
-                      Tooltip(
-                        key: Key('science'),
-                        message: "science",
-                        child: Icon(Icons.science),
-                      ),
-                      Tooltip(
-                        key: Key('business'),
-                        message: "business",
-                        child: Icon(Icons.business),
-                      ),
-                      Tooltip(
-                        key: Key('technology'),
-                        message: "technology",
-                        child: Icon(Icons.computer),
-                      ),
-                      Tooltip(
-                        key: Key('health'),
-                        message: "health",
-                        child: Icon(Icons.health_and_safety),
-                      ),
-                    ],
-                    onPressed: (int index) {
-                      setState(() {
-                        for (var i = 0; i < _selections.length; i++) {
-                          if (i == index) {
-                            _selections[index] = !_selections[i];
-                          } else {
-                            _selections[i] = false;
-                          }
-                        }
-                        // _selections[index] = !_selections[index];
-                      });
-                    },
-                    isSelected: _selections,
-                  ),
-                ),
+                // Container(
+                //   padding:
+                //       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                //   child: ToggleButtons(
+                //     selectedColor: Colors.white,
+                //     fillColor: Colors.redAccent,
+                //     splashColor: Colors.greenAccent,
+                //     highlightColor: Colors.blueGrey,
+                //     borderRadius: BorderRadius.circular(20),
+                //     children: <Widget>[
+                //       Tooltip(
+                //         key: Key('general'),
+                //         message: "general",
+                //         child: Icon(Icons.all_out),
+                //       ),
+                //       Tooltip(
+                //         key: Key('sports'),
+                //         message: "sports",
+                //         child: Icon(Icons.sports),
+                //       ),
+                //       Tooltip(
+                //         key: Key('entertainment'),
+                //         message: "entertainment",
+                //         child: Icon(Icons.movie),
+                //       ),
+                //       Tooltip(
+                //         key: Key('science'),
+                //         message: "science",
+                //         child: Icon(Icons.science),
+                //       ),
+                //       Tooltip(
+                //         key: Key('business'),
+                //         message: "business",
+                //         child: Icon(Icons.business),
+                //       ),
+                //       Tooltip(
+                //         key: Key('technology'),
+                //         message: "technology",
+                //         child: Icon(Icons.computer),
+                //       ),
+                //       Tooltip(
+                //         key: Key('health'),
+                //         message: "health",
+                //         child: Icon(Icons.health_and_safety),
+                //       ),
+                //     ],
+                //     onPressed: (int index) {
+                //       setState(() {
+                //         for (var i = 0; i < _selections.length; i++) {
+                //           if (i == index) {
+                //             _selections[index] = !_selections[i];
+                //           } else {
+                //             _selections[i] = false;
+                //           }
+                //         }
+                //         // _selections[index] = !_selections[index];
+                //       });
+                //     },
+                //     isSelected: _selections,
+                //   ),
+                // ),
                 LimitedBox(
                   maxWidth: MediaQuery.of(context).size.width,
                   maxHeight: MediaQuery.of(context).size.height,

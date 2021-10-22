@@ -24,16 +24,29 @@ class TopNews extends StatefulWidget {
 
 class _TopNewsState extends State<TopNews> {
   List<bool> _selections = List.generate(categories.length, (_) => false);
-  getTopNews({dynamic limit}) async {
+  String? category;
+  getTopNews({dynamic limit, String? categoryParam}) async {
     try {
-      var uri = Uri.http(
-        "api.mediastack.com",
-        "/v1/news",
-        {
-          'access_key': access_key,
-          'languages': 'en',
-        },
-      );
+      var uri = categoryParam == null
+          ? Uri.http(
+              "api.mediastack.com",
+              "/v1/news",
+              {
+                'access_key': access_key,
+                'languages': 'en',
+              },
+            )
+          : Uri.http(
+              "api.mediastack.com",
+              "/v1/news",
+              {
+                'access_key': access_key,
+                'languages': 'en',
+                'categories': category.toString()
+              },
+            );
+      print('URI');
+      print(uri);
       var response = await http.get(uri);
       List jsonResponse = jsonDecode(response.body)['data'];
       return jsonResponse;
@@ -58,7 +71,7 @@ class _TopNewsState extends State<TopNews> {
     //   ),
     // );
     return FutureBuilder(
-      future: getTopNews(),
+      future: getTopNews(categoryParam: category),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return SingleChildScrollView(
@@ -82,9 +95,9 @@ class _TopNewsState extends State<TopNews> {
                         child: Icon(Icons.all_out),
                       ),
                       Tooltip(
-                        key: Key('sports'),
-                        message: "sports",
-                        child: Icon(Icons.sports),
+                        key: Key('business'),
+                        message: "business",
+                        child: Icon(Icons.business),
                       ),
                       Tooltip(
                         key: Key('entertainment'),
@@ -92,14 +105,14 @@ class _TopNewsState extends State<TopNews> {
                         child: Icon(Icons.movie),
                       ),
                       Tooltip(
-                        key: Key('science'),
-                        message: "science",
-                        child: Icon(Icons.science),
+                        key: Key('health'),
+                        message: "health",
+                        child: Icon(Icons.health_and_safety),
                       ),
                       Tooltip(
-                        key: Key('business'),
-                        message: "business",
-                        child: Icon(Icons.business),
+                        key: Key('sports'),
+                        message: "sports",
+                        child: Icon(Icons.sports),
                       ),
                       Tooltip(
                         key: Key('technology'),
@@ -107,9 +120,9 @@ class _TopNewsState extends State<TopNews> {
                         child: Icon(Icons.computer),
                       ),
                       Tooltip(
-                        key: Key('health'),
-                        message: "health",
-                        child: Icon(Icons.health_and_safety),
+                        key: Key('science'),
+                        message: "science",
+                        child: Icon(Icons.science),
                       ),
                     ],
                     onPressed: (int index) {
@@ -121,12 +134,12 @@ class _TopNewsState extends State<TopNews> {
                             _selections[i] = false;
                           }
                         }
-                        // _selections[index] = !_selections[index];
+                        // if (category == '') {
+                        category = categories[index];
+                        print('Selected category: $category');
+                        getTopNews(categoryParam: category);
+                        // }
                       });
-                      print(_selections[index]);
-                      // setState(() {
-                      //   isSelected[index] = !isSelected[index];
-                      // });
                     },
                     isSelected: _selections,
                   ),

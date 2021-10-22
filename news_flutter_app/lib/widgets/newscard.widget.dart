@@ -59,7 +59,7 @@ class NewsCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Text(
-                  news.title,
+                  news.title.characters.take(50).toString() + "...",
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
