@@ -45,8 +45,6 @@ class _TopNewsState extends State<TopNews> {
                 'categories': category.toString()
               },
             );
-      print('URI');
-      print(uri);
       var response = await http.get(uri);
       List jsonResponse = jsonDecode(response.body)['data'];
       return jsonResponse;
@@ -136,7 +134,6 @@ class _TopNewsState extends State<TopNews> {
                         }
                         // if (category == '') {
                         category = categories[index];
-                        print('Selected category: $category');
                         getTopNews(categoryParam: category);
                         // }
                       });

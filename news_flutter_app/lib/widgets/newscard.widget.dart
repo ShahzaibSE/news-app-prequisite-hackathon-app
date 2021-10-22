@@ -12,8 +12,8 @@ class NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 350,
+      width: MediaQuery.of(context).size.width - 20,
+      height: 330,
       child: GestureDetector(
         onTap: () {
           Navigator.push(
