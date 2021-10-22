@@ -22,8 +22,9 @@ class HeadlineWidget extends StatefulWidget {
 
 class _HeadlineWidgetState extends State<HeadlineWidget> {
   final List<bool> _selections = List.generate(categories.length, (_) => false);
+  String? category = "general";
 
-  getHeadlines({dynamic limit}) async {
+  getHeadlines({dynamic limit, String? categoryParam}) async {
     try {
       var uri = Uri.http(
         "api.mediastack.com",
@@ -31,13 +32,12 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
         {
           'access_key': access_key,
           'languages': 'en',
-          'limit': '50',
-          'categories': "health,sports,general"
+          // 'limit': '50',
+          'categories': categoryParam.toString()
         },
       );
       var response = await http.get(uri);
       List jsonResponse = jsonDecode(response.body)['data'];
-      print("Top News - JSON");
       // print(jsonResponse);
       // var newsModel = NewsModel(jsonResponse[0]['title']);
       // print(newsModel.title);
@@ -114,7 +114,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getHeadlines(),
+      future: getHeadlines(categoryParam: category),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return SingleChildScrollView(
@@ -130,6 +130,7 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                     splashColor: Colors.greenAccent,
                     highlightColor: Colors.blueGrey,
                     borderRadius: BorderRadius.circular(20),
+                    borderColor: Colors.red,
                     children: <Widget>[
                       Tooltip(
                         key: Key('general'),
@@ -137,9 +138,9 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                         child: Icon(Icons.all_out),
                       ),
                       Tooltip(
-                        key: Key('sports'),
-                        message: "sports",
-                        child: Icon(Icons.sports),
+                        key: Key('business'),
+                        message: "business",
+                        child: Icon(Icons.business),
                       ),
                       Tooltip(
                         key: Key('entertainment'),
@@ -147,14 +148,14 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                         child: Icon(Icons.movie),
                       ),
                       Tooltip(
-                        key: Key('science'),
-                        message: "science",
-                        child: Icon(Icons.science),
+                        key: Key('health'),
+                        message: "health",
+                        child: Icon(Icons.health_and_safety),
                       ),
                       Tooltip(
-                        key: Key('business'),
-                        message: "business",
-                        child: Icon(Icons.business),
+                        key: Key('sports'),
+                        message: "sports",
+                        child: Icon(Icons.sports),
                       ),
                       Tooltip(
                         key: Key('technology'),
@@ -162,9 +163,9 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                         child: Icon(Icons.computer),
                       ),
                       Tooltip(
-                        key: Key('health'),
-                        message: "health",
-                        child: Icon(Icons.health_and_safety),
+                        key: Key('science'),
+                        message: "science",
+                        child: Icon(Icons.science),
                       ),
                     ],
                     onPressed: (int index) {
@@ -176,6 +177,8 @@ class _HeadlineWidgetState extends State<HeadlineWidget> {
                             _selections[i] = false;
                           }
                         }
+                        category = categories[index];
+                        getHeadlines(categoryParam: category);
                         // _selections[index] = !_selections[index];
                       });
                     },
