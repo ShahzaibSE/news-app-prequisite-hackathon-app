@@ -127,15 +127,16 @@ class _TopNewsState extends State<TopNews> {
                       setState(() {
                         for (var i = 0; i < _selections.length; i++) {
                           if (i == index) {
-                            _selections[index] = !_selections[i];
+                            _selections[index] = true;
                           } else {
                             _selections[i] = false;
                           }
                         }
-                        // if (category == '') {
                         category = categories[index];
                         getTopNews(categoryParam: category);
-                        // }
+                        if (category == '') {
+                          print('Category unselected');
+                        }
                       });
                     },
                     isSelected: _selections,

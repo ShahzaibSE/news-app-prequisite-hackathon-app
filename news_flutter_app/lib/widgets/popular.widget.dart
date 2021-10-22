@@ -161,7 +161,7 @@ class _PopularWidgetState extends State<PopularWidget> {
                       setState(() {
                         for (var i = 0; i < _selections.length; i++) {
                           if (i == index) {
-                            _selections[index] = !_selections[i];
+                            _selections[index] = true;
                           } else {
                             _selections[i] = false;
                           }
