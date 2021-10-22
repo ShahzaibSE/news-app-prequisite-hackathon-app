@@ -14,8 +14,9 @@ class PopularWidget extends StatefulWidget {
 
 class _PopularWidgetState extends State<PopularWidget> {
   final List<bool> _selections = List.generate(categories.length, (_) => false);
+  String? category = "general";
 
-  getPopularNews({dynamic limit}) async {
+  getPopularNews({dynamic limit, String? categoryParam}) async {
     try {
       var uri = Uri.http(
         "api.mediastack.com",
@@ -24,7 +25,7 @@ class _PopularWidgetState extends State<PopularWidget> {
           'access_key': access_key,
           'languages': 'en',
           'limit': '50',
-          'categories': "technology,entertainment"
+          'categories': categoryParam
         },
       );
       var response = await http.get(uri);
@@ -102,7 +103,7 @@ class _PopularWidgetState extends State<PopularWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getPopularNews(),
+      future: getPopularNews(categoryParam: category),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return SingleChildScrollView(
@@ -118,6 +119,7 @@ class _PopularWidgetState extends State<PopularWidget> {
                     splashColor: Colors.greenAccent,
                     highlightColor: Colors.blueGrey,
                     borderRadius: BorderRadius.circular(20),
+                    borderColor: Colors.red,
                     children: <Widget>[
                       Tooltip(
                         key: Key('general'),
@@ -125,9 +127,9 @@ class _PopularWidgetState extends State<PopularWidget> {
                         child: Icon(Icons.all_out),
                       ),
                       Tooltip(
-                        key: Key('sports'),
-                        message: "sports",
-                        child: Icon(Icons.sports),
+                        key: Key('business'),
+                        message: "business",
+                        child: Icon(Icons.business),
                       ),
                       Tooltip(
                         key: Key('entertainment'),
@@ -135,14 +137,14 @@ class _PopularWidgetState extends State<PopularWidget> {
                         child: Icon(Icons.movie),
                       ),
                       Tooltip(
-                        key: Key('science'),
-                        message: "science",
-                        child: Icon(Icons.science),
+                        key: Key('health'),
+                        message: "health",
+                        child: Icon(Icons.health_and_safety),
                       ),
                       Tooltip(
-                        key: Key('business'),
-                        message: "business",
-                        child: Icon(Icons.business),
+                        key: Key('sports'),
+                        message: "sports",
+                        child: Icon(Icons.sports),
                       ),
                       Tooltip(
                         key: Key('technology'),
@@ -150,9 +152,9 @@ class _PopularWidgetState extends State<PopularWidget> {
                         child: Icon(Icons.computer),
                       ),
                       Tooltip(
-                        key: Key('health'),
-                        message: "health",
-                        child: Icon(Icons.health_and_safety),
+                        key: Key('science'),
+                        message: "science",
+                        child: Icon(Icons.science),
                       ),
                     ],
                     onPressed: (int index) {
@@ -164,6 +166,8 @@ class _PopularWidgetState extends State<PopularWidget> {
                             _selections[i] = false;
                           }
                         }
+                        category = categories[index];
+                        getPopularNews(categoryParam: category);
                         // _selections[index] = !_selections[index];
                       });
                     },
